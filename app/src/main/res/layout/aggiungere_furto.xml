@@ -1,0 +1,226 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <!--Toolbar -->
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:orientation="vertical"
+        android:id="@+id/linearLayout">
+
+        <include
+            layout="@layout/toolbar" />
+    </LinearLayout>
+
+    <!-- Titolo -->
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <TextView
+            android:layout_alignParentLeft="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="15dp"
+            android:layout_marginTop="20dp"
+            android:text="@string/titolo_furto"
+            android:textSize="25dp" />
+        <EditText
+            android:layout_width="175dp"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="15dp"
+            android:layout_marginTop="20dp"
+            android:layout_alignParentRight="true"
+            android:id="@+id/titolo_nuevo_furto" />
+
+    </RelativeLayout>
+    <!-- Tipo di Furto -->
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <TextView
+            android:layout_alignParentLeft="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="15dp"
+            android:layout_marginTop="20dp"
+            android:text="@string/tipo_furto"
+            android:textSize="25dp" />
+        <Spinner
+            android:layout_alignParentRight="true"
+            android:layout_width="175dp"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="15dp"
+            android:layout_marginTop="20dp"
+            android:textSize="25sp"
+            android:id="@+id/spinner_tipo_nuovo_furto"/>
+
+    </RelativeLayout>
+
+    <!-- Indirizzo -> Digitare coordinate o clic in map-->
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <TextView
+            android:layout_alignParentLeft="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="15dp"
+            android:layout_weight="1"
+            android:text="@string/indirizzo"
+            android:textSize="25dp"/>
+        <EditText
+            android:layout_width="135dp"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="15dp"
+            android:id="@+id/indirizzo_nuovo_furto"
+            android:hint="@string/indirizzo_hint"
+            android:layout_alignParentTop="true"
+            android:layout_toLeftOf="@+id/imageButton"
+            android:layout_toStartOf="@+id/imageButton" />
+
+        <ImageButton
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:drawable="@drawable/ic_action_map"
+            android:layout_marginRight="5dp"
+            android:scaleX=".5"
+            android:scaleY=".5"
+            android:src="@drawable/ic_action_location_found"
+            android:onClick="openMap"
+            android:id="@+id/imageButton"
+            android:layout_centerVertical="true"
+            android:layout_alignParentRight="true"
+
+            android:layout_alignParentEnd="true" />
+
+    </RelativeLayout>
+    <!-- Bottone per andare alla mapa -->
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_alignParentRight="true"
+
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_gravity="end"></LinearLayout>
+
+    <!-- Date -->
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <TextView
+            android:layout_alignParentLeft="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="15dp"
+            android:text="@string/date"
+            android:textSize="25dp"
+            android:layout_weight="1"
+            android:id="@+id/textView2" />
+        <Button
+            android:layout_width="175dp"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="15dp"
+            android:id="@+id/date_nuevo_furto"
+            android:onClick="scegliData"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+
+            android:layout_marginEnd="34dp" />
+
+    </RelativeLayout>
+
+    <!-- Ora -->
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <TextView
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentRight="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="15dp"
+            android:text="@string/ora"
+            android:textSize="25dp"
+            android:layout_weight="1"
+            android:id="@+id/textView" />
+        <Spinner
+            android:layout_alignParentRight="true"
+            android:layout_width="175dp"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="15dp"
+            android:textSize="25sp"
+            android:id="@+id/spinner_ora_nuovo_furto" />
+
+    </RelativeLayout>
+
+    <!-- Descrizione -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="15dp"
+            android:text="@string/descrizione"
+            android:textSize="25dp"/>
+        <EditText
+            android:paddingTop="0px"
+            android:gravity="top"
+            android:layout_width="fill_parent"
+            android:layout_height="103dp"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"
+            android:id="@+id/descrizione_nuevo_furto"
+            android:hint="@string/descrizione_hint"/>
+    </LinearLayout>
+
+    <!-- Confermare -->
+    <View android:id="@+id/spacer"
+        android:layout_width="fill_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        />
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:weightSum="1">
+        <Button
+            android:layout_width="160dp"
+            android:layout_height="70dp"
+            android:layout_marginLeft="20dp"
+            android:drawableBottom="@drawable/ic_action_accept"
+            android:text="Accettare"
+            android:textSize="10dp"
+            android:scaleY=".8"
+            android:onClick="salvareFurto"
+            android:layout_weight="0.30"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true" />
+        <Button
+            android:layout_width="160dp"
+            android:layout_height="70dp"
+            android:layout_marginRight="20dp"
+            android:drawableBottom="@drawable/ic_action_cancel"
+            android:text="Cancelare"
+            android:textSize="10dp"
+            android:scaleY=".8"
+            android:onClick="cancelare"
+            android:layout_weight="0.30"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            />
+    </RelativeLayout>
+</LinearLayout>
