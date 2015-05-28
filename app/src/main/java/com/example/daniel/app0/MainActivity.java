@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.location.Location;
+import android.location.LocationListener;
 import android.os.Bundle;
 import android.provider.Settings;
 import android.support.v4.widget.DrawerLayout;
@@ -33,7 +34,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 
-public class MainActivity extends ActionBarActivity{
+public class MainActivity extends ActionBarActivity implements TouchableWrapper.UpdateMapAfterUserInterection {
 
     private static final int REQUEST_STATE = 0;
     private static final int FAVORITI_STATE = 5;
@@ -57,6 +58,8 @@ public class MainActivity extends ActionBarActivity{
     private double initLat;
     private double initLon;
     private static Polizia polizia;
+
+    Location location;
 
     ServerAPI api;
    public static ServerAPI staticapi;
@@ -331,6 +334,9 @@ public class MainActivity extends ActionBarActivity{
      */
     private void setUpMap() {
         Location mLoc = mLocationListener.mLoc;
+
+        location=mLoc;
+
         //Para mostrar latitud y longitud por pantalla
         if (mLoc != null){
             String name = "My Position";
@@ -346,8 +352,6 @@ public class MainActivity extends ActionBarActivity{
         else {
             initLat=41.9;
             initLon=12;
-
-
         }
     }
 
@@ -369,9 +373,19 @@ public class MainActivity extends ActionBarActivity{
 
     public static void addFurto(Furto mFurto) {
         if (arrayFurti == null)
-            arrayFurti = new ArrayList<Furto>();
+            arrayFurti = new ArrayList<>();
 
-        arrayFurti.add(mFurto);
+        boolean is_new_furto=true;
+
+        /*Contorlla gli elementi gia presenti in database in modo da non inserire lo stesso furto due volte nel array*/
+        for (int i=0;i<arrayFurti.size();i++)
+            if(mFurto.mId==arrayFurti.get(i).mId)
+                is_new_furto=false;
+
+
+
+        if(is_new_furto)
+            arrayFurti.add(mFurto);
     }
 
     public static  List<Favoriti> getArrayFavoriti ()
@@ -423,11 +437,11 @@ public class MainActivity extends ActionBarActivity{
         for(int i = 0; i < arrayFurti.size(); i++)
             MainActivity.addMakerFurtoMap(arrayFurti.get(i));
 
-        mMap.addMarker(new MarkerOptions().position(new LatLng(initLat,initLon))
+     /*   mMap.addMarker(new MarkerOptions().position(new LatLng(initLat,initLon))
                 .title("Posizione " )
                 .snippet("" + initLat+ " " +initLon)
                 .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE)));
-        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(initLat,initLon), 16));
+        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(initLat,initLon), 16));*/
     }
 
 
@@ -465,7 +479,6 @@ public class MainActivity extends ActionBarActivity{
     }
 
 
-
     public Furto getFurto(String idMarker){
         Furto f = new Furto();
         for(int i = 0; i < arrayFurti.size(); i++){
@@ -477,5 +490,23 @@ public class MainActivity extends ActionBarActivity{
 
     public static void aggiornaListaFavoriti() {
         arrayFavoriti=null;
+    }
+
+    @Override
+    public void onUpdateMapAfterUserInterection() {
+      //  Toast.makeText(MainActivity.getAppContext(), "Map Updated ", Toast.LENGTH_SHORT).show();
+       LatLng latLng= mMap.getCameraPosition().target;
+
+        Location new_location = new Location("new location");
+        location.setLatitude(latLng.latitude);
+        location.setLongitude(latLng.longitude);
+
+
+        if (location.distanceTo(new_location)>5000 ) {
+            location=new_location;
+            api.furti(latLng.latitude, latLng.longitude);
+      //      Toast.makeText(MainActivity.getAppContext(), arrayFurti.toString(), Toast.LENGTH_LONG).show();
+            restartMap();
+        }
     }
 }

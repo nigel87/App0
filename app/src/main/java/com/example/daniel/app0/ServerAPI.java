@@ -439,7 +439,6 @@ public  class ServerAPI {
 
         String paramString = URLEncodedUtils.format(nameValuePairs, "utf-8");
         url += paramString;
-
         return url;
     }
     /*
