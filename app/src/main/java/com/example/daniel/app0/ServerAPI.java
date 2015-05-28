@@ -222,7 +222,7 @@ public  class ServerAPI {
                     lat = Double.parseDouble(slat);
                     lon=Double.parseDouble(slon);
                     Favoriti favoriti = new Favoriti(name,lat,lon);
-                    MainActivity.addFavoriti(favoriti,false);
+                    MainActivity.addFavoriti(favoriti);
                 }
                 break;
 
@@ -236,7 +236,7 @@ public  class ServerAPI {
                     lat = Double.parseDouble(slat);
                     lon=Double.parseDouble(slon);
                     Favoriti favoriti = new Favoriti(name,lat,lon);
-                    MainActivity.addFavoriti(favoriti,false);
+                    MainActivity.addFavoriti(favoriti);
                 }
                 break;
 
