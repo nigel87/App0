@@ -384,8 +384,10 @@ public class MainActivity extends ActionBarActivity implements TouchableWrapper.
 
 
 
-        if(is_new_furto)
+        if(is_new_furto) {
+            staticapi.getCommenti(mFurto.mId);
             arrayFurti.add(mFurto);
+        }
     }
 
     public static  List<Favoriti> getArrayFavoriti ()
@@ -490,6 +492,15 @@ public class MainActivity extends ActionBarActivity implements TouchableWrapper.
 
     public static void aggiornaListaFavoriti() {
         arrayFavoriti=null;
+    }
+
+    public static void remplaceFurto(Furto nFurto){
+        for(int i = 0; i < arrayFurti.size(); i++){
+            if(arrayFurti.get(i).mId == nFurto.mId){
+                arrayFurti.remove(i);
+                arrayFurti.add(nFurto);
+            }
+        }
     }
 
     @Override

@@ -26,6 +26,17 @@ public class InfoFurtoActivity extends ActionBarActivity {
 
         setContentView(R.layout.info_furto);
 
+        toolbar = (android.support.v7.widget.Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onBackPressed();
+            }
+        });
+
         /*
         * Cerchiamo il id dil furto in Extra dil Bundle per sapere di che furto è il marker
          */

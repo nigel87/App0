@@ -210,101 +210,90 @@ public  class ServerAPI {
 
         String id,descrizione, name,tipo, testo, titolo, date, device, created, slat, slon, ora,address,phone,updated;
         double lat, lon;
-
-
-        if (mTipoJson==FAV)
-        {
-            JSONObject jsonObject = new JSONObject(result);
-            result=jsonObject.get("fav").toString();
-            JSONArray jsonArray = new JSONArray(result);
-            for(int i = 0; i < jsonArray.length(); i++)
-            {
-                name    = jsonArray.getJSONObject(i).getString("favname");
-                slat    = jsonArray.getJSONObject(i).getString("lat");
-                slon    = jsonArray.getJSONObject(i).getString("lon");
-                lat = Double.parseDouble(slat);
-                lon=Double.parseDouble(slon);
-                Favoriti favoriti = new Favoriti(name,lat,lon);
-                MainActivity.addFavoriti(favoriti,false);
-            }
-        }
-
-
-
-        if (mTipoJson==ADD_FAV)
-        {
-            JSONObject jsonObject = new JSONObject(result);
-            result=jsonObject.get("fav").toString();
-            JSONArray jsonArray = new JSONArray(result);
-            MainActivity.aggiornaListaFavoriti();
-            for(int i = 0; i < jsonArray.length(); i++)
-            {
-                name    = jsonArray.getJSONObject(i).getString("favname");
-                slat    = jsonArray.getJSONObject(i).getString("lat");
-                slon    = jsonArray.getJSONObject(i).getString("lon");
-                lat = Double.parseDouble(slat);
-                lon=Double.parseDouble(slon);
-                Favoriti favoriti = new Favoriti(name,lat,lon);
-                MainActivity.addFavoriti(favoriti,false);
-            }
-
-        }
-
         JSONArray jsonArray = new JSONArray(result);
-        if (mTipoJson==FURTI)
-            for(int i = 0; i < jsonArray.length(); i++){
-                id = jsonArray.getJSONObject(i).getString("fid");
-                titolo = jsonArray.getJSONObject(i).getString("titolo");
-                tipo = jsonArray.getJSONObject(i).getString("categoria");
-                descrizione = jsonArray.getJSONObject(i).getString("descr");
-                slat = jsonArray.getJSONObject(i).getString("lat");
-                slon = jsonArray.getJSONObject(i).getString("lon");
-                ora = jsonArray.getJSONObject(i).getString("fascia");
-                date = jsonArray.getJSONObject(i).getString("data");
-                device = jsonArray.getJSONObject(i).getString("deviceid");
 
-
-                //Furto(int newId, String newTitolo, String newTipo, String newIndirizzo, String newDate, String newOra, String newDescizione, String newDeviceId)
-                Furto newFurto = new Furto(Integer.parseInt(id), titolo, tipo, Furto.coordinateAIndirizzo(Double.parseDouble(slat), Double.parseDouble(slon)),date,ora,descrizione, device);
-
-           //     getCommenti(Integer.parseInt(id));
-                MainActivity.addFurto(newFurto);
-
-
-            }
-
-        if (mTipoJson==POLICE)
-        {//[{"type":"carabinieri","lat":"42.9","lon":"11.9","address":"via tal dei tali","phone":"+3906123456","updated":"2015-05-14 10:34:22"}]
-            tipo    = jsonArray.getJSONObject(0).getString("type");
-            slat    = jsonArray.getJSONObject(0).getString("lat");
-            slon    = jsonArray.getJSONObject(0).getString("lon");
-            address = jsonArray.getJSONObject(0).getString("address");
-            phone   = jsonArray.getJSONObject(0).getString("phone");
-            updated   = jsonArray.getJSONObject(0).getString("updated");
-
-            Polizia p = new Polizia(tipo,slat,slon,address,phone,updated);
-            MainActivity.setPolizia(p);
-        }
-
-        if (mTipoJson==COMMENTI) {//{"idfurto":"9","body":"Comentario","created":"2015-05-26 21:21:30"}
-            if (!result.contains("idfurto")) {
-                id = jsonArray.getJSONObject(0).getString("idfurto");
-                int fId = Integer.parseInt(id);
-                Furto f = new Furto();
-                for (int i = 0; i < MainActivity.arrayFurti.size(); i++) {
-                    if (MainActivity.arrayFurti.get(i).mId == fId)
-                        f = MainActivity.arrayFurti.get(i);
+        switch (mTipoJson){
+            case FAV:
+                for(int i = 0; i < jsonArray.length(); i++)
+                {
+                    name    = jsonArray.getJSONObject(i).getString("favname");
+                    slat    = jsonArray.getJSONObject(i).getString("lat");
+                    slon    = jsonArray.getJSONObject(i).getString("lon");
+                    lat = Double.parseDouble(slat);
+                    lon=Double.parseDouble(slon);
+                    Favoriti favoriti = new Favoriti(name,lat,lon);
+                    MainActivity.addFavoriti(favoriti,false);
                 }
-                for (int i = 0; i < jsonArray.length(); i++) {
-                    testo = jsonArray.getJSONObject(i).getString("body");
-                    created = jsonArray.getJSONObject(i).getString("created");
-                    f.addCommento(testo);
+                break;
+
+            case ADD_FAV:
+                MainActivity.aggiornaListaFavoriti();
+                for(int i = 0; i < jsonArray.length(); i++)
+                {
+                    name    = jsonArray.getJSONObject(i).getString("favname");
+                    slat    = jsonArray.getJSONObject(i).getString("lat");
+                    slon    = jsonArray.getJSONObject(i).getString("lon");
+                    lat = Double.parseDouble(slat);
+                    lon=Double.parseDouble(slon);
+                    Favoriti favoriti = new Favoriti(name,lat,lon);
+                    MainActivity.addFavoriti(favoriti,false);
+                }
+                break;
+
+            case FURTI:
+                for(int i = 0; i < jsonArray.length(); i++){
+                    id = jsonArray.getJSONObject(i).getString("fid");
+                    titolo = jsonArray.getJSONObject(i).getString("titolo");
+                    tipo = jsonArray.getJSONObject(i).getString("categoria");
+                    descrizione = jsonArray.getJSONObject(i).getString("descr");
+                    slat = jsonArray.getJSONObject(i).getString("lat");
+                    slon = jsonArray.getJSONObject(i).getString("lon");
+                    ora = jsonArray.getJSONObject(i).getString("fascia");
+                    date = jsonArray.getJSONObject(i).getString("data");
+                    device = jsonArray.getJSONObject(i).getString("deviceid");
+
+
+                    //Furto(int newId, String newTitolo, String newTipo, String newIndirizzo, String newDate, String newOra, String newDescizione, String newDeviceId)
+                    Furto newFurto = new Furto(Integer.parseInt(id), titolo, tipo, Furto.coordinateAIndirizzo(Double.parseDouble(slat), Double.parseDouble(slon)),date,ora,descrizione, device);
+
+                    //     getCommenti(Integer.parseInt(id));
+                    MainActivity.addFurto(newFurto);
+
 
                 }
-            }
+                break;
+
+            case POLICE:
+                tipo    = jsonArray.getJSONObject(0).getString("type");
+                slat    = jsonArray.getJSONObject(0).getString("lat");
+                slon    = jsonArray.getJSONObject(0).getString("lon");
+                address = jsonArray.getJSONObject(0).getString("address");
+                phone   = jsonArray.getJSONObject(0).getString("phone");
+                updated   = jsonArray.getJSONObject(0).getString("updated");
+
+                Polizia p = new Polizia(tipo,slat,slon,address,phone,updated);
+                MainActivity.setPolizia(p);
+                break;
+
+            case COMMENTI:
+                if (result.contains("idfurto")) {
+                    id = jsonArray.getJSONObject(0).getString("idfurto");
+                    int fId = Integer.parseInt(id);
+                    Furto f = new Furto();
+                    for (int i = 0; i < MainActivity.arrayFurti.size(); i++) {
+                        if (MainActivity.arrayFurti.get(i).mId == fId)
+                            f = MainActivity.arrayFurti.get(i);
+                    }
+                    for (int i = 0; i < jsonArray.length(); i++) {
+                        testo = jsonArray.getJSONObject(i).getString("body");
+                        created = jsonArray.getJSONObject(i).getString("created");
+                        f.addCommento(testo);
+
+                    }
+                    MainActivity.remplaceFurto(f);
+                }
+                break;
         }
-
-
     }
 
 
