@@ -1,5 +1,6 @@
 package com.example.daniel.app0;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
@@ -145,6 +146,7 @@ public class AggiungereFurto extends ActionBarActivity {
         mDateButton.setText(dateForButton);
     }
 
+    @SuppressLint("ValidFragment")
     class DatePickerFragment extends DialogFragment implements
             DatePickerDialog.OnDateSetListener {
 
@@ -164,8 +166,6 @@ public class AggiungereFurto extends ActionBarActivity {
             mCalendar.set(Calendar.MONTH, month);
             mCalendar.set(Calendar.DAY_OF_MONTH, day);
             updateDateButtonText();
-
-
         }
     }
 
