@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.location.Location;
-import android.location.LocationListener;
 import android.os.Bundle;
 import android.provider.Settings;
 import android.support.v4.widget.DrawerLayout;
@@ -73,13 +72,6 @@ public class MainActivity extends ActionBarActivity implements TouchableWrapper.
         MainActivity.polizia = polizia;
     }
 
-/*
-    @Override
-    public void onBackPressed(){
-       // Toast.makeText(MainActivity.getAppContext(), "back pressed ", Toast.LENGTH_SHORT).show();
-
-    }
-**/
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         api = new ServerAPI(Settings.Secure.getString(this.getContentResolver(),
