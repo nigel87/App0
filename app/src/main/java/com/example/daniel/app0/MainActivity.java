@@ -394,9 +394,9 @@ public class MainActivity extends ActionBarActivity implements TouchableWrapper.
 
     }
 
-    public static void addFavoriti(Favoriti mFavoriti, boolean addToServer) {
+    public static void addFavoriti(Favoriti mFavoriti) {
         if (arrayFavoriti == null)
-            arrayFavoriti = new ArrayList<Favoriti>();
+            arrayFavoriti = new ArrayList<>();
 
         arrayFavoriti.add(mFavoriti);
 

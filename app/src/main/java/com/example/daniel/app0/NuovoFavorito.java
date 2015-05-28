@@ -41,11 +41,10 @@ public class NuovoFavorito extends ActionBarActivity {
 *       if (arrayFavoriti.size()<3)
         arrayFavoriti.add(mFavoirti);
         else   Toast.makeText(GestioneFavoriti.getAppContext(), "Si possono insererire solo fino a 3 favoriti ", Toast.LENGTH_SHORT).show();
-
 *
 * */
 
-        MainActivity.addFavoriti(new Favoriti(nome.getText().toString(), indirizzo.getText().toString()),true);
+        MainActivity.addFavoriti(new Favoriti(nome.getText().toString(), indirizzo.getText().toString()));
 
         MainActivity.staticapi.fav(MainActivity.getArrayFavoriti());
         Intent intent = new Intent(this,NuovoFavorito.class);

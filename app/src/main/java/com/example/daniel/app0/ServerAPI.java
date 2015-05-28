@@ -94,7 +94,6 @@ public  class ServerAPI {
     {   is_get=false;//utilizza metodo post per gestire i preferiti
         String url=FAV_BASE_URL;
         url=newfavURL(url, arrayfav);
-//        Toast.makeText(MainActivity.getAppContext(), url, Toast.LENGTH_LONG).show();
         new HttpAsyncTask(ADD_FAV).execute(url);
     }
 
@@ -112,7 +111,6 @@ public  class ServerAPI {
         is_get=false;//utilizza metodo post per inserire un nuovo furto
         String url=ADDCOMMENTO_BASE_URL;
         url = addCommentoURL(url, fId, comment);
-//        Toast.makeText(getBaseContext(), url, Toast.LENGTH_LONG).show();
         new HttpAsyncTask(ADDCOMMENTO).execute(url);
     }
 
@@ -144,7 +142,7 @@ public  class ServerAPI {
         protected void onPostExecute(String result) {
 
             try{
-                if(result.equals("[]")==false)
+                if(!result.equals("[]"))
                     convertRequest(result,tipo);
 
             }
@@ -225,11 +223,9 @@ public  class ServerAPI {
                 lat = Double.parseDouble(slat);
                 lon=Double.parseDouble(slon);
                 Favoriti favoriti = new Favoriti(name,lat,lon);
-                MainActivity.addFavoriti(favoriti,false);
+                MainActivity.addFavoriti(favoriti);
             }
         }
-
-
 
         if (mTipoJson==ADD_FAV)
         {
@@ -245,7 +241,7 @@ public  class ServerAPI {
                 lat = Double.parseDouble(slat);
                 lon=Double.parseDouble(slon);
                 Favoriti favoriti = new Favoriti(name,lat,lon);
-                MainActivity.addFavoriti(favoriti,false);
+                MainActivity.addFavoriti(favoriti);
             }
 
         }
@@ -431,8 +427,8 @@ public  class ServerAPI {
     private String getCommentiURL(String url, int fId){
         if(!url.endsWith("?"))
             url += "?";
-        List nameValuePairs = new ArrayList(1);
-        nameValuePairs.add(new BasicNameValuePair("deviceid", String.valueOf(deviceid)));
+        List<BasicNameValuePair> nameValuePairs = new ArrayList<>(1);
+        nameValuePairs.add(new BasicNameValuePair("deviceid", deviceid));
         nameValuePairs.add(new BasicNameValuePair("model", String.valueOf(model)));
         nameValuePairs.add(new BasicNameValuePair("version", "1.0"));
         nameValuePairs.add(new BasicNameValuePair("idfurto", String.valueOf(fId)));
@@ -448,9 +444,9 @@ public  class ServerAPI {
     private String addCommentoURL(String url, int fId, String testo){
         if(!url.endsWith("?"))
             url += "?";
-        List nameValuePairs = new ArrayList(1);
-        nameValuePairs.add(new BasicNameValuePair("deviceid", String.valueOf(deviceid)));
-        nameValuePairs.add(new BasicNameValuePair("model", String.valueOf(model)));
+        List<BasicNameValuePair> nameValuePairs = new ArrayList<>(1);
+        nameValuePairs.add(new BasicNameValuePair("deviceid", deviceid));
+        nameValuePairs.add(new BasicNameValuePair("model", model));
         nameValuePairs.add(new BasicNameValuePair("version", "1.0"));
         nameValuePairs.add(new BasicNameValuePair("idfurto", String.valueOf(fId)));
         nameValuePairs.add(new BasicNameValuePair("testo",  testo));
