@@ -505,7 +505,6 @@ public class MainActivity extends ActionBarActivity implements TouchableWrapper.
         if (location.distanceTo(new_location)>5000 ) {
             location=new_location;
             api.furti(latLng.latitude, latLng.longitude);
-      //      Toast.makeText(MainActivity.getAppContext(), arrayFurti.toString(), Toast.LENGTH_LONG).show();
             restartMap();
         }
     }
