@@ -429,6 +429,7 @@ public class MainActivity extends ActionBarActivity implements TouchableWrapper.
     public   void restartMap ()
     {
         for(int i = 0; i < arrayFurti.size(); i++)
+            if (arrayFurti.get(i).mIdMarker==null)
             MainActivity.addMakerFurtoMap(arrayFurti.get(i));
 
      /*   mMap.addMarker(new MarkerOptions().position(new LatLng(initLat,initLon))

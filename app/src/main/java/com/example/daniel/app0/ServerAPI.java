@@ -300,7 +300,6 @@ public  class ServerAPI {
 
 
 
-
     /**************************************************************
      ** Funzioni che modificano le URL aggiungendo i parametri   **
      ** neccessari per communicare con il Database               **
@@ -420,7 +419,7 @@ public  class ServerAPI {
     private String getCommentiURL(String url, int fId){
         if(!url.endsWith("?"))
             url += "?";
-        List nameValuePairs = new ArrayList(1);
+        List<BasicNameValuePair> nameValuePairs = new ArrayList<>(1);
         nameValuePairs.add(new BasicNameValuePair("deviceid", String.valueOf(deviceid)));
         nameValuePairs.add(new BasicNameValuePair("model", String.valueOf(model)));
         nameValuePairs.add(new BasicNameValuePair("version", "1.0"));
@@ -437,7 +436,7 @@ public  class ServerAPI {
     private String addCommentoURL(String url, int fId, String testo){
         if(!url.endsWith("?"))
             url += "?";
-        List nameValuePairs = new ArrayList(1);
+        List<BasicNameValuePair> nameValuePairs = new ArrayList<>(1);
         nameValuePairs.add(new BasicNameValuePair("deviceid", String.valueOf(deviceid)));
         nameValuePairs.add(new BasicNameValuePair("model", String.valueOf(model)));
         nameValuePairs.add(new BasicNameValuePair("version", "1.0"));
