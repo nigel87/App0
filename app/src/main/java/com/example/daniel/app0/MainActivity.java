@@ -505,13 +505,15 @@ public class MainActivity extends ActionBarActivity implements TouchableWrapper.
     public   void restartMap2 ()
     {
         for(int i = 0; i < arrayFurti.size(); i++)
-         //   if (arrayFurti.get(i).mIdMarker==null)
-                MainActivity.addMakerFurtoMap(arrayFurti.get(i));
+              MainActivity.addMakerFurtoMap(arrayFurti.get(i));
+
+
 
         mMap.addMarker(new MarkerOptions().position(new LatLng(initLat,initLon))
                 .title("Posizione " )
                 .snippet("" + initLat+ " " +initLon)
                 .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE)));
+
         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(initLat,initLon), 16));
     }
 
