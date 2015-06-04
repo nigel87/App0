@@ -28,12 +28,14 @@ public class MyLocationListener implements LocationListener {
         setProvider();
 
         mLocationManager.requestLocationUpdates(mProvider, TIEMPO_MIN, DISTANCIA_MIN, this);
-        mLoc = mLocationManager.getLastKnownLocation(mProvider);
+        mLoc = mLocationManager.getLastKnownLocation("network");
         
     };
 
     public void update(){
         mLocationManager.requestLocationUpdates(mProvider, TIEMPO_MIN, DISTANCIA_MIN, this);
+        mLoc = mLocationManager.getLastKnownLocation(mProvider);
+
     }
 
     private void setProvider(){

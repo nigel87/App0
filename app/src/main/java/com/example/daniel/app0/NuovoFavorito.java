@@ -7,11 +7,14 @@ import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.TextView;
+
 /**
  * Created by nigel on 12/05/15.
  */
 public class NuovoFavorito extends ActionBarActivity {
     private static final int REQUEST_STATE = 0;
+    private static final int REQUEST_POSTO = 1;
     private Toolbar toolbar;
 
 
@@ -61,6 +64,23 @@ public class NuovoFavorito extends ActionBarActivity {
         setResult(Activity.RESULT_CANCELED, intent);
         NuovoFavorito.this.finish();
     }
+// Alla fine di NuovoFavorito
 
+    public void openMap(View view){
+        Intent intent = new Intent(NuovoFavorito.this, MapCercarePosto.class);
+        NuovoFavorito.this.startActivityForResult(intent, REQUEST_POSTO);
+    }
+
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == REQUEST_POSTO) {
+            double[] newLoc = data.getDoubleArrayExtra("location");
+            addLocation(newLoc);
+        }
+    }
+
+    public void addLocation(double[] latlng){
+        EditText editIndirizzo = (EditText) findViewById(R.id.indirizzo_favorito);
+        editIndirizzo.setText(Furto.coordinateAIndirizzo(latlng[0],latlng[1]), TextView.BufferType.EDITABLE);
+    }
 
 }

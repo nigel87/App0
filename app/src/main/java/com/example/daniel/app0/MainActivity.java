@@ -131,9 +131,9 @@ public class MainActivity extends ActionBarActivity implements TouchableWrapper.
             }
         });
 
-        api.furti(mLocationListener.mLoc.getLatitude(), mLocationListener.mLoc.getLongitude());
+      api.furti(mLocationListener.mLoc.getLatitude(), mLocationListener.mLoc.getLongitude());
         api.fav();
-    api.police(mLocationListener.mLoc.getLatitude(), mLocationListener.mLoc.getLongitude());
+   api.police(mLocationListener.mLoc.getLatitude(), mLocationListener.mLoc.getLongitude());
 
 
        /* Setting a custom info window adapter for the google map

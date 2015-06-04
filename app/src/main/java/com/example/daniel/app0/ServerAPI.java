@@ -210,10 +210,23 @@ public  class ServerAPI {
 
         String id,descrizione, name,tipo, testo, titolo, date, device, created, slat, slon, ora,address,phone,updated;
         double lat, lon;
-        JSONArray jsonArray = new JSONArray(result);
+
+        JSONArray jsonArray;
+
+        if (mTipoJson==FAV)
+        {
+            JSONObject jsonObject = new JSONObject(result);
+            result=jsonObject.get("fav").toString();
+             jsonArray = new JSONArray(result);
+        }
+            else
+         jsonArray = new JSONArray(result);
+
+
 
         switch (mTipoJson){
             case FAV:
+
                 for(int i = 0; i < jsonArray.length(); i++)
                 {
                     name    = jsonArray.getJSONObject(i).getString("favname");
