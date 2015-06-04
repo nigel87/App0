@@ -54,8 +54,6 @@ public class MainActivity extends ActionBarActivity implements TouchableWrapper.
     private ArrayAdapter<String> navigationDrawerAdapter;
     private String[] barasinistra;
 
-    private double initLat;
-    private double initLon;
     private static Polizia polizia;
 
     Location location;
@@ -133,9 +131,9 @@ public class MainActivity extends ActionBarActivity implements TouchableWrapper.
             }
         });
 
-        api.furti(initLat, initLon);
+        api.furti(mLocationListener.mLoc.getLatitude(), mLocationListener.mLoc.getLongitude());
         api.fav();
-    api.police(initLat, initLon);
+    api.police(mLocationListener.mLoc.getLatitude(), mLocationListener.mLoc.getLongitude());
 
 
        /* Setting a custom info window adapter for the google map
@@ -382,26 +380,19 @@ public class MainActivity extends ActionBarActivity implements TouchableWrapper.
      * mediante la longitud y la latitud de tu dispositivo.
      */
     private void setUpMap() {
-        Location mLoc = mLocationListener.mLoc;
 
-        location=mLoc;
+        location=mLocationListener.mLoc;
 
         //Para mostrar latitud y longitud por pantalla
-        if (mLoc != null){
-            String name = "My Position";
-            String coord = mLoc.getLatitude() + ", " + mLoc.getLongitude();
-            mMap.addMarker(new MarkerOptions()  .position(new LatLng(mLoc.getLatitude(), mLoc.getLongitude()))
-                    .title(name)
-                    .snippet(coord)
-                    .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE)));
-            mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(mLoc.getLatitude(), mLoc.getLongitude()), 16));
-            initLat=mLoc.getLatitude();
-            initLon=mLoc.getLongitude();
-        }
-        else {
-            initLat=41.9;
-            initLon=12;
-        }
+        String name = "My Position";
+        String coord = mLocationListener.mLoc.getLatitude() + ", " +mLocationListener.mLoc.getLongitude();
+
+        mMap.addMarker(new MarkerOptions()  .position(new LatLng(mLocationListener.mLoc.getLatitude(), mLocationListener.mLoc.getLongitude()))
+                .title(name)
+                .snippet(coord)
+                .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE)));
+        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(mLocationListener.mLoc.getLatitude(), mLocationListener.mLoc.getLongitude()), 16));
+
     }
 
     /**
@@ -508,13 +499,14 @@ public class MainActivity extends ActionBarActivity implements TouchableWrapper.
               MainActivity.addMakerFurtoMap(arrayFurti.get(i));
 
 
+        mLocationListener.update();
 
-        mMap.addMarker(new MarkerOptions().position(new LatLng(initLat,initLon))
+        mMap.addMarker(new MarkerOptions().position(new LatLng(mLocationListener.mLoc.getLatitude(),mLocationListener.mLoc.getLongitude()))
                 .title("Posizione " )
-                .snippet("" + initLat+ " " +initLon)
+                .snippet("" + mLocationListener.mLoc.getLatitude()+ " " +mLocationListener.mLoc.getLongitude())
                 .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE)));
 
-        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(initLat,initLon), 16));
+        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(mLocationListener.mLoc.getLatitude(),mLocationListener.mLoc.getLongitude()), 16));
     }
 
 
@@ -574,14 +566,15 @@ public class MainActivity extends ActionBarActivity implements TouchableWrapper.
         }
     }
 
+
     @Override
     public void onUpdateMapAfterUserInterection() {
       //  Toast.makeText(MainActivity.getAppContext(), "Map Updated ", Toast.LENGTH_SHORT).show();
        LatLng latLng= mMap.getCameraPosition().target;
 
         Location new_location = new Location("new location");
-        location.setLatitude(latLng.latitude);
-        location.setLongitude(latLng.longitude);
+        new_location.setLatitude(latLng.latitude);
+        new_location.setLongitude(latLng.longitude);
 
 
         if (location.distanceTo(new_location)>5000 ) {
