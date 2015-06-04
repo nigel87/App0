@@ -103,7 +103,7 @@ public class MainActivity extends ActionBarActivity implements TouchableWrapper.
                 switch (position) {
                     case 0://home
                         mMap.clear();
-                        restartMap();
+                        restartMap2();
                         drawerLayout.closeDrawer(R.id.drawer_layout);
                         break;
                     case 1://Tipo di furto
@@ -437,6 +437,25 @@ public class MainActivity extends ActionBarActivity implements TouchableWrapper.
                 .snippet("" + initLat+ " " +initLon)
                 .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE)));
         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(initLat,initLon), 16));*/
+    }
+
+
+
+
+    /*Riaggiunge sulla mappa i marker per tutti i furti presenti nel array arrayFurti,
+    * e vissualizza la posizione corente
+    * */
+    public   void restartMap2 ()
+    {
+        for(int i = 0; i < arrayFurti.size(); i++)
+         //   if (arrayFurti.get(i).mIdMarker==null)
+                MainActivity.addMakerFurtoMap(arrayFurti.get(i));
+
+        mMap.addMarker(new MarkerOptions().position(new LatLng(initLat,initLon))
+                .title("Posizione " )
+                .snippet("" + initLat+ " " +initLon)
+                .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE)));
+        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(initLat,initLon), 16));
     }
 
 
