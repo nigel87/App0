@@ -12,7 +12,7 @@ import android.widget.TextView;
 /**
  * Created by nigel on 12/05/15.
  */
-public class NuovoFavorito extends ActionBarActivity {
+public class NuovoPreferito extends ActionBarActivity {
     private static final int REQUEST_STATE = 0;
     private static final int REQUEST_POSTO = 1;
     private Toolbar toolbar;
@@ -43,32 +43,32 @@ public class NuovoFavorito extends ActionBarActivity {
 * TODO:Aggiungere controlli su nome e indirizzo vuoiri e size > 3
 *       if (arrayFavoriti.size()<3)
         arrayFavoriti.add(mFavoirti);
-        else   Toast.makeText(GestioneFavoriti.getAppContext(), "Si possono insererire solo fino a 3 favoriti ", Toast.LENGTH_SHORT).show();
+        else   Toast.makeText(GestionePreferiti.getAppContext(), "Si possono insererire solo fino a 3 favoriti ", Toast.LENGTH_SHORT).show();
 *
 * */
 
-        MainActivity.addFavoriti(new Favoriti(nome.getText().toString(), indirizzo.getText().toString()));
+        MainActivity.addPreferiti(new Preferiti(nome.getText().toString(), indirizzo.getText().toString()));
 
-        MainActivity.staticapi.fav(MainActivity.getArrayFavoriti());
-        Intent intent = new Intent(this,NuovoFavorito.class);
+        MainActivity.staticapi.fav(MainActivity.getArrayPreferiti());
+        Intent intent = new Intent(this,NuovoPreferito.class);
         setResult(Activity.RESULT_OK, intent);
 
-        NuovoFavorito.this.finish();
+        NuovoPreferito.this.finish();
 
     }
 
 
     public void cancelareFavorito(View view)
     {
-        Intent intent = new Intent(this,NuovoFavorito.class);
+        Intent intent = new Intent(this,NuovoPreferito.class);
         setResult(Activity.RESULT_CANCELED, intent);
-        NuovoFavorito.this.finish();
+        NuovoPreferito.this.finish();
     }
-// Alla fine di NuovoFavorito
+// Alla fine di NuovoPreferito
 
     public void openMap(View view){
-        Intent intent = new Intent(NuovoFavorito.this, MapCercarePosto.class);
-        NuovoFavorito.this.startActivityForResult(intent, REQUEST_POSTO);
+        Intent intent = new Intent(NuovoPreferito.this, MapCercarePosto.class);
+        NuovoPreferito.this.startActivityForResult(intent, REQUEST_POSTO);
     }
 
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {

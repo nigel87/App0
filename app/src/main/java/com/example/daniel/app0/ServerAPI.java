@@ -90,7 +90,7 @@ public  class ServerAPI {
     }
 
     //inserisce un nuovo favoirto
-    public void fav( List<Favoriti> arrayfav)
+    public void fav( List<Preferiti> arrayfav)
     {   is_get=false;//utilizza metodo post per gestire i preferiti
         String url=FAV_BASE_URL;
         url=newfavURL(url, arrayfav);
@@ -234,13 +234,13 @@ public  class ServerAPI {
                     slon    = jsonArray.getJSONObject(i).getString("lon");
                     lat = Double.parseDouble(slat);
                     lon=Double.parseDouble(slon);
-                    Favoriti favoriti = new Favoriti(name,lat,lon);
-                    MainActivity.addFavoriti(favoriti);
+                    Preferiti favoriti = new Preferiti(name,lat,lon);
+                    MainActivity.addPreferiti(favoriti);
                 }
                 break;
 
             case ADD_FAV:
-                MainActivity.aggiornaListaFavoriti();
+                MainActivity.aggiornaLIstaPreferiti();
                 for(int i = 0; i < jsonArray.length(); i++)
                 {
                     name    = jsonArray.getJSONObject(i).getString("favname");
@@ -248,8 +248,8 @@ public  class ServerAPI {
                     slon    = jsonArray.getJSONObject(i).getString("lon");
                     lat = Double.parseDouble(slat);
                     lon=Double.parseDouble(slon);
-                    Favoriti favoriti = new Favoriti(name,lat,lon);
-                    MainActivity.addFavoriti(favoriti);
+                    Preferiti favoriti = new Preferiti(name,lat,lon);
+                    MainActivity.addPreferiti(favoriti);
                 }
                 break;
 
@@ -404,13 +404,13 @@ public  class ServerAPI {
     parametri in POST deviceid model version [favlist]
     Dove: favlist json contenente un elenco di coordinate lat,lon: se presente aggiorna i preferiti dell'utente sul server.
     Esempio: &favlist=[{"name":"casa","lat":42,"lon":12}, {"name":"ufficio","lat":43,"lon":13}]*/
-    private String newfavURL(String url, List<Favoriti> arrayfav) {
+    private String newfavURL(String url, List<Preferiti> arrayfav) {
         JSONArray fav=new JSONArray();
         try {
             for (int i=0;i<arrayfav.size();i++)
             {   JSONObject newfav = new JSONObject();
 
-                Favoriti favoriti=arrayfav.get(i);
+                Preferiti favoriti=arrayfav.get(i);
                 newfav.put("name", favoriti.getNome());
                 newfav.put("lat", favoriti.mLatitude);
                 newfav.put("lon", favoriti.mLongitude);

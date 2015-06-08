@@ -11,20 +11,20 @@ import java.util.Locale;
 /**
  * Created by nigel on 12/05/15.
  */
-public class Favoriti {
+public class Preferiti {
     String mNome;
     String mIndirizzo;
     public double mLatitude;
     public double mLongitude;
 
 
-    public Favoriti(String nome, String indirizzo)
+    public Preferiti(String nome, String indirizzo)
     {
         mNome=nome;
         mIndirizzo=indirizzo;
         coordinate();
     }
-    public Favoriti(String nome,double lat, double lon)
+    public Preferiti(String nome, double lat, double lon)
     {
         mNome=nome;
         mLatitude=lat;

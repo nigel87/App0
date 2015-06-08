@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
+import android.view.Menu;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
@@ -19,10 +20,10 @@ import java.util.List;
 /**
  * Created by nigel on 12/05/15.
  */
-public class GestioneFavoriti extends ActionBarActivity {
+public class GestionePreferiti extends ActionBarActivity {
     private static final int FAVORITI_STATE = 5;
     private static Context context;
-    private static List<Favoriti> arrayFavoriti;
+    private static List<Preferiti> arrayFavoriti;
     private android.support.v7.widget.Toolbar toolbar;
     List<String> li= new ArrayList<String>();
 
@@ -34,8 +35,8 @@ public class GestioneFavoriti extends ActionBarActivity {
     {
         if (resultCode == Activity.RESULT_OK)
         {
-            Favoriti favoriti= MainActivity.getArrayFavoriti().get(MainActivity.getArrayFavoriti().size()-1);
-            setContentView(R.layout.favoriti_lista);
+            Preferiti favoriti= MainActivity.getArrayPreferiti().get(MainActivity.getArrayPreferiti().size()-1);
+            setContentView(R.layout.preferiti_lista);
             setupToolbar();
             ListView listafavoriti = (ListView) findViewById(R.id.favlist);
             li.add(favoriti.getNome());
@@ -57,16 +58,16 @@ public class GestioneFavoriti extends ActionBarActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
-        arrayFavoriti=MainActivity.getArrayFavoriti();
+        arrayFavoriti=MainActivity.getArrayPreferiti();
         super.onCreate(savedInstanceState);
         if (arrayFavoriti==null)
-            setContentView(R.layout.favoriti_vuoto);
+            setContentView(R.layout.preferiti_vuoto);
         else
-            setContentView(R.layout.favoriti_lista);
+            setContentView(R.layout.preferiti_lista);
 
         runFadeInAnimation();
 
-        GestioneFavoriti.context = getApplicationContext();
+        GestionePreferiti.context = getApplicationContext();
 
 
 
@@ -78,7 +79,7 @@ public class GestioneFavoriti extends ActionBarActivity {
         {
             for (int i = 0; i < arrayFavoriti.size(); i++)
             {
-                final Favoriti favoriti = arrayFavoriti.get(i);
+                final Preferiti favoriti = arrayFavoriti.get(i);
 
                 li.add(favoriti.getNome());
             }
@@ -96,24 +97,24 @@ public class GestioneFavoriti extends ActionBarActivity {
         @Override
         public void onItemClick(AdapterView parent, View view, int position, long id)
         {
-                Intent intent = new Intent(GestioneFavoriti.this, GestioneFavoriti.class);
+                Intent intent = new Intent(GestionePreferiti.this, GestionePreferiti.class);
                 setResult(FAVORITI_STATE, intent);
-                GestioneFavoriti.this.finish();
-                MainActivity.newFavoirto(position);
+                GestionePreferiti.this.finish();
+                MainActivity.newPreferito(position);
         }
 
 
     }
 
 
-    public static Context getAppContext(){return  GestioneFavoriti.context;}
+    public static Context getAppContext(){return  GestionePreferiti.context;}
 
 
     // Aggiungere un nuovo favorito
     public void nuovoFavorito(View v)
     {
-        Intent intent = new Intent(GestioneFavoriti.this, NuovoFavorito.class);
-        GestioneFavoriti.this.startActivityForResult(intent, FAVORITI_STATE);
+        Intent intent = new Intent(GestionePreferiti.this, NuovoPreferito.class);
+        GestionePreferiti.this.startActivityForResult(intent, FAVORITI_STATE);
     }
 
 
@@ -129,6 +130,14 @@ public class GestioneFavoriti extends ActionBarActivity {
                 onBackPressed();
             }
         });
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.menu, menu);
+
+        return true;
     }
 
 }

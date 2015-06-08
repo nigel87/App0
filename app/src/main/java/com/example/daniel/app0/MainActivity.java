@@ -9,6 +9,7 @@ import android.provider.Settings;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.ActionBarDrawerToggle;
+
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -36,14 +37,14 @@ import android.widget.Toast;
 public class MainActivity extends ActionBarActivity implements TouchableWrapper.UpdateMapAfterUserInterection {
 
     private static final int REQUEST_STATE = 0;
-    private static final int FAVORITI_STATE = 5;
+    private static final int PREFERITI_STATE = 5;
     private static final int INFO_FURTO_STATE = 2;
 
 
     private static GoogleMap mMap; // Might be null if Google Play services APK is not available.
     public static MyLocationListener mLocationListener;
     public static List<Furto> arrayFurti;
-    private static List<Favoriti> arrayFavoriti;
+    private static List<Preferiti> arrayPreferiti;
     private static Context context;
 
 
@@ -172,7 +173,7 @@ public class MainActivity extends ActionBarActivity implements TouchableWrapper.
                         tvPosLon.setText("Lon: " + mLocationListener.mLoc.getLongitude());
                         return p;
 
-                    case "Favoriti":
+                    case "Preferiti":
                         // Getting view from the layout file info_window_layout
                         View f = getLayoutInflater().inflate(R.layout.info_marker_fav, null);
 
@@ -182,7 +183,7 @@ public class MainActivity extends ActionBarActivity implements TouchableWrapper.
                         // Getting reference to the TextView to set Date
                         TextView tvFavIndirizzo = (TextView) f.findViewById(R.id.tv_indirizzo);
 
-                        Favoriti newFav = arrayFavoriti.get(0);     //TODO: Provisional
+                        Preferiti newFav = arrayPreferiti.get(0);     //TODO: Provisional
 
                         // Setting the Name, Date & Ora
                         tvFavName.setText(newFav.getNome());
@@ -248,7 +249,7 @@ public class MainActivity extends ActionBarActivity implements TouchableWrapper.
                     case "My Position":
                         Toast.makeText(MainActivity.getAppContext(), "Posizione attuale", Toast.LENGTH_SHORT).show();
                         break;
-                    case "Favoriti":
+                    case "Preferiti":
                         break;
                     case "Carabinieri":
                         break;
@@ -324,36 +325,34 @@ public class MainActivity extends ActionBarActivity implements TouchableWrapper.
             if (resultCode == Activity.RESULT_OK)
                newFurto();
 
-  //      if (resultCode==FAVORITI_STATE)
-//            newFavoirto();
+  //      if (resultCode==PREFERITI_STATE)
+//            newPreferito();
 
     //    setUpMapIfNeeded();
 
     }
 
     /*
-    * Aggoingi un nuovo favorito sulla mappa
+    * Aggoingi un nuovo preferito sulla mappa
     *
     * */
-    public static void newFavoirto(int position) {
+    public static void newPreferito(int position) {
 
 
-     Favoriti newFavorito = arrayFavoriti.get(position);
+     Preferiti newPreferito  = arrayPreferiti.get(position);
 
         //Decide between the different makers
-        mMap.addMarker(new MarkerOptions().position(new LatLng(newFavorito.mLatitude, newFavorito.mLongitude))
-                .title("Favoriti")
-                        //     .snippet(newFnewFavoritourto.mMostrare) //drawable/btn_star
+        mMap.addMarker(new MarkerOptions().position(new LatLng(newPreferito.mLatitude, newPreferito.mLongitude))
+                .title("Preferiti")
                 .icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_star_small)));
 
-        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(newFavorito.mLatitude, newFavorito.mLongitude), 16));
+        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(newPreferito.mLatitude, newPreferito.mLongitude), 16));
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu, menu);
-
 
         return true;
     }
@@ -430,21 +429,21 @@ public class MainActivity extends ActionBarActivity implements TouchableWrapper.
         }
     }
 
-    public static  List<Favoriti> getArrayFavoriti ()
+    public static  List<Preferiti> getArrayPreferiti()
     {
-        return arrayFavoriti;
+        return arrayPreferiti;
 
     }
 
-    public static void addFavoriti(Favoriti mFavoriti) {
-        if (arrayFavoriti == null)
-            arrayFavoriti = new ArrayList<>();
+    public static void addPreferiti(Preferiti mFavoriti) {
+        if (arrayPreferiti == null)
+            arrayPreferiti = new ArrayList<>();
 
-        arrayFavoriti.add(mFavoriti);
+        arrayPreferiti.add(mFavoriti);
 
      //   if (addToServer==true)
 
-      // staticapi.fav(arrayFavoriti);
+      // staticapi.fav(arrayPreferiti);
     }
 
 
@@ -462,7 +461,7 @@ public class MainActivity extends ActionBarActivity implements TouchableWrapper.
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_favorites) {//seleziono preferiti
 
-            Intent intent = new Intent(MainActivity.this, GestioneFavoriti.class);
+            Intent intent = new Intent(MainActivity.this, GestionePreferiti.class);
             MainActivity.this.startActivityForResult(intent,REQUEST_STATE);
 
             return true;
@@ -553,8 +552,8 @@ public class MainActivity extends ActionBarActivity implements TouchableWrapper.
         return f;
     }
 
-    public static void aggiornaListaFavoriti() {
-        arrayFavoriti=null;
+    public static void aggiornaLIstaPreferiti() {
+        arrayPreferiti =null;
     }
 
     public static void remplaceFurto(Furto nFurto){

@@ -42,18 +42,18 @@
                 android:value="com.example.daniel.app0.MainActivity" />
         </activity>
         <activity
-            android:name=".GestioneFavoriti"
-            android:label="@string/title_activity_gestire_favoriti" >
+            android:name=".GestionePreferiti"
+            android:label="@string/title_activity_gestire_preferiti" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.example.daniel.app0.MainActivity" />
         </activity>
         <activity
-            android:name=".NuovoFavorito"
-            android:label="@string/title_activity_aggiungere_favorito" >
+            android:name=".NuovoPreferito"
+            android:label="@string/title_activity_aggiungere_preferito" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".GestioneFavoriti" />
+                android:value=".GestionePreferiti" />
         </activity>
         <activity
             android:name=".MapCercarePosto"

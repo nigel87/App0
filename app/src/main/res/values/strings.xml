@@ -3,13 +3,13 @@
     <string name="title_activity_main">Furti</string>
     <string name="title_activity_aggiungere_furto">Aggiungere Furto</string>
     <string name="title_activity_map_cercare_posto">Cercare Posto</string>
-    <string name="title_activity_gestire_favoriti">Gestisci favoriti</string>
-    <string name="title_activity_aggiungere_favorito">Aggiungi un nuovo favorito</string>
+    <string name="title_activity_gestire_preferiti">Gestisci preferiti</string>
+    <string name="title_activity_aggiungere_preferito">Aggiungi un nuovo preferito</string>
     <string name="title_activity_info_furto">Informazione di Furto</string>
 
 
     <string name="action_settings">Settings</string>
-    <string name="action_favorites">Favorites</string>
+    <string name="action_preferiti">Preferiti</string>
 
     <string name="titolo_furto">Titolo</string>
     <string name="tipo_furto">Tipo di furto</string>
@@ -25,9 +25,9 @@
     <string name="descrizione_hint">Aggiunge una descrizione dil furto</string>
     <string name="drawer_open">Open</string>
     <string name="drawer_close">Close</string>
-    <string name="NessunFavoritoTitolo">Nessun favorito trovato</string>
-    <string name="NessunFavoritoSototitolo">Inserendo un favorito si possono ricevere notifiche rigardo ai furti segnalati in zona</string>
-    <string name="BottoneAggiungiFav">Aggiungi un nuovo favorito</string>
+    <string name="NessunPreferitoTitolo">Nessun preferito trovato</string>
+    <string name="NessunPreferitoSototitolo">Inserendo un preferito si possono ricevere notifiche rigardo ai furti segnalati in zona</string>
+    <string name="BottoneAggiungiFav">Aggiungi un nuovo preferito</string>
 
 
 </resources>
