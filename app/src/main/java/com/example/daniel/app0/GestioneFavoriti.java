@@ -10,10 +10,8 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
-import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -37,7 +35,7 @@ public class GestioneFavoriti extends ActionBarActivity {
         if (resultCode == Activity.RESULT_OK)
         {
             Favoriti favoriti= MainActivity.getArrayFavoriti().get(MainActivity.getArrayFavoriti().size()-1);
-            setContentView(R.layout.favoriti3);
+            setContentView(R.layout.favoriti_lista);
             setupToolbar();
             ListView listafavoriti = (ListView) findViewById(R.id.favlist);
             li.add(favoriti.getNome());
@@ -62,9 +60,9 @@ public class GestioneFavoriti extends ActionBarActivity {
         arrayFavoriti=MainActivity.getArrayFavoriti();
         super.onCreate(savedInstanceState);
         if (arrayFavoriti==null)
-            setContentView(R.layout.favoriti2);
+            setContentView(R.layout.favoriti_vuoto);
         else
-            setContentView(R.layout.favoriti3);
+            setContentView(R.layout.favoriti_lista);
 
         runFadeInAnimation();
 
