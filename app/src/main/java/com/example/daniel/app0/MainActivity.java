@@ -45,7 +45,7 @@ public class MainActivity extends ActionBarActivity implements TouchableWrapper.
     private static GoogleMap mMap; // Might be null if Google Play services APK is not available.
     public static MyLocationListener mLocationListener;
     public static List<Furto> arrayFurti;
-    private static List<Favoriti> arrayFavoriti;
+    private static List<Preferiti> arrayFavoriti;
     private static Context context;
 
 
@@ -202,7 +202,7 @@ public class MainActivity extends ActionBarActivity implements TouchableWrapper.
                         // Getting reference to the TextView to set Date
                         TextView tvFavIndirizzo = (TextView) f.findViewById(R.id.tv_indirizzo);
 
-                        Favoriti newFav = MainActivity.getArrayFavoriti().get(0);     //TODO: Provisional
+                        Preferiti newFav = MainActivity.getArrayPreferiti().get(0);     //TODO: Provisional
 
                         // Setting the Name, Date & Ora
                         tvFavName.setText(newFav.getNome());
@@ -355,7 +355,7 @@ public class MainActivity extends ActionBarActivity implements TouchableWrapper.
     public static void newFavoirto(int position) {
 
 
-     Favoriti newFavorito = arrayFavoriti.get(position);
+     Preferiti newPreferito = arrayFavoriti.get(position);
 
         //Decide between the different makers
         /*mMap.addMarker(new MarkerOptions().position(new LatLng(newFavorito.mLatitude, newFavorito.mLongitude))
@@ -364,12 +364,12 @@ public class MainActivity extends ActionBarActivity implements TouchableWrapper.
                 .icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_star_small)));
 
         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(newFavorito.mLatitude, newFavorito.mLongitude), 16));*/
-        MarkerOptions markerOptions = new MarkerOptions().position(new LatLng(newFavorito.mLatitude, newFavorito.mLongitude))
+        MarkerOptions markerOptions = new MarkerOptions().position(new LatLng(newPreferito.mLatitude, newPreferito.mLongitude))
                 .title("Favoriti")
                         //     .snippet(newFnewFavoritourto.mMostrare) //drawable/btn_star
                 .icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_star_small));
         mMapManager.addMarker(markerOptions);
-        mMapManager.moveCameraTo(new LatLng(newFavorito.mLatitude, newFavorito.mLongitude), 16);
+        mMapManager.moveCameraTo(new LatLng(newPreferito.mLatitude, newPreferito.mLongitude), 16);
 
     }
 
@@ -456,13 +456,13 @@ public class MainActivity extends ActionBarActivity implements TouchableWrapper.
         }
     }
 
-    public static  List<Favoriti> getArrayFavoriti ()
+    public static  List<Preferiti> getArrayPreferiti ()
     {
         return arrayFavoriti;
 
     }
 
-    public static void addFavoriti(Favoriti mFavoriti) {
+    public static void addFavoriti(Preferiti mFavoriti) {
         if (arrayFavoriti == null)
             arrayFavoriti = new ArrayList<>();
 
@@ -488,7 +488,7 @@ public class MainActivity extends ActionBarActivity implements TouchableWrapper.
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_favorites) {//seleziono preferiti
 
-            Intent intent = new Intent(MainActivity.this, GestioneFavoriti.class);
+            Intent intent = new Intent(MainActivity.this, GestionePreferiti.class);
             MainActivity.this.startActivityForResult(intent,REQUEST_STATE);
 
             return true;
