@@ -241,7 +241,7 @@ public  class ServerAPI {
                 break;
 
             case ADD_FAV:
-                MainActivity.aggiornaLIstaPreferiti();
+                MainActivity.aggiornaListaPreferiti();
                 for(int i = 0; i < jsonArray.length(); i++)
                 {
                     name    = jsonArray.getJSONObject(i).getString("favname");

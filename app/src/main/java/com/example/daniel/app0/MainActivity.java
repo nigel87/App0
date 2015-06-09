@@ -13,7 +13,6 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
@@ -39,10 +38,9 @@ public class MainActivity extends ActionBarActivity implements TouchableWrapper.
     public static final int INFO_FURTO_STATE = 2;
 
 
-    private static GoogleMap mMap; // Might be null if Google Play services APK is not available.
     public static MyLocationListener mLocationListener;
     public static List<Furto> arrayFurti;
-    private static List<Preferiti> arrayFavoriti;
+    private static List<Preferiti> arrayPreferiti;
     private static Context context;
 
 
@@ -64,9 +62,6 @@ public class MainActivity extends ActionBarActivity implements TouchableWrapper.
     public static GestioneMappa mMapManager;
 
 
-    public static GoogleMap getMap(){
-        return mMap;
-    }
    public static ServerAPI staticapi;
 
 
@@ -309,10 +304,10 @@ public class MainActivity extends ActionBarActivity implements TouchableWrapper.
     * Aggoingi un nuovo favorito sulla mappa
     *
     * */
-    public static void newFavoirto(int position) {
+    public static void newPreferito(int position) {
 
 
-     Preferiti newPreferito = arrayFavoriti.get(position);
+     Preferiti newPreferito = arrayPreferiti.get(position);
 
         //Decide between the different makers
         /*mMap.addMarker(new MarkerOptions().position(new LatLng(newFavorito.mLatitude, newFavorito.mLongitude))
@@ -415,19 +410,19 @@ public class MainActivity extends ActionBarActivity implements TouchableWrapper.
 
     public static  List<Preferiti> getArrayPreferiti ()
     {
-        return arrayFavoriti;
+        return arrayPreferiti;
 
     }
 
-    public static void addFavoriti(Preferiti mFavoriti) {
-        if (arrayFavoriti == null)
-            arrayFavoriti = new ArrayList<>();
+    public static void addPreferiti(Preferiti mFavoriti) {
+        if (arrayPreferiti == null)
+            arrayPreferiti = new ArrayList<>();
 
-        arrayFavoriti.add(mFavoriti);
+        arrayPreferiti.add(mFavoriti);
 
      //   if (addToServer==true)
 
-      // staticapi.fav(arrayFavoriti);
+      // staticapi.fav(arrayPreferiti);
     }
 
 
@@ -532,8 +527,8 @@ public class MainActivity extends ActionBarActivity implements TouchableWrapper.
         return f;
     }
 
-    public static void aggiornaListaFavoriti() {
-        arrayFavoriti=null;
+    public static void aggiornaListaPreferiti() {
+        arrayPreferiti=null;
     }
 
     public static void remplaceFurto(Furto nFurto){

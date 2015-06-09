@@ -23,7 +23,7 @@ public class GestisciBarraSinistra implements AdapterView.OnItemClickListener {
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         switch (position) {
             case 0://home
-                MainActivity.getMap().clear();
+                MainActivity.mMapManager.getMap().clear();
                 MainActivity.restartMap2();
                 drawerLayout.closeDrawer(R.id.drawer_layout);
                 break;
@@ -31,16 +31,16 @@ public class GestisciBarraSinistra implements AdapterView.OnItemClickListener {
                 // aggiungereFurto( view); //come test apre la pagina di un nuovo furto
                 break;
             case 2: //Carabinieri
-                MainActivity.getMap().clear();
+                MainActivity.mMapManager.getMap().clear();
                 Polizia polizia=MainActivity.getPolizia();
                 if (polizia!= null) {
                     //Para mostrar latitud y longitud por pantalla
                     String name = MainActivity.getPolizia().mIndirizzo;
-                    MainActivity.getMap().addMarker(new MarkerOptions().position(new LatLng(polizia.getmLatitude(), polizia.getmLongitude()))
+                    MainActivity.mMapManager.getMap().addMarker(new MarkerOptions().position(new LatLng(polizia.getmLatitude(), polizia.getmLongitude()))
                             .title(name)
                             .snippet(polizia.mPhone)
                             .icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_carabbinieri)));
-                    MainActivity.getMap().moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(polizia.getmLatitude(), polizia.getmLongitude()), 16));
+                    MainActivity.mMapManager.getMap().moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(polizia.getmLatitude(), polizia.getmLongitude()), 16));
 
                     drawerLayout.closeDrawer(R.id.drawer_layout);
                 }

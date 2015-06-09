@@ -47,7 +47,7 @@ public class GestioneInfoWindows {
                 // Getting reference to the TextView to set Date
                 TextView tvFavIndirizzo = (TextView) f.findViewById(R.id.tv_indirizzo);
 
-                Favoriti newFav = MainActivity.getArrayFavoriti().get(0);     //TODO: Provisional
+                Preferiti newFav = MainActivity.getArrayPreferiti().get(0);     //TODO: Provisional
 
                 // Setting the Name, Date & Ora
                 tvFavName.setText(newFav.getNome());

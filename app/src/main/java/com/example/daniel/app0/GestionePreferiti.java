@@ -29,7 +29,6 @@ public class GestionePreferiti extends ActionBarActivity {
 
 
 
-
     //TODO: Grafica
     protected void onActivityResult(int requestCode, int resultCode, Intent data)
     {
@@ -103,8 +102,6 @@ public class GestionePreferiti extends ActionBarActivity {
                 GestionePreferiti.this.finish();
                 MainActivity.newPreferito(position);
         }
-
-
     }
 
 
