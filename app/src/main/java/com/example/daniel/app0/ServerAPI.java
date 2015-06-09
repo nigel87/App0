@@ -153,7 +153,8 @@ public  class ServerAPI {
             }
             if(MainActivity.arrayFurti != null && !is_furti_caricatti){
                 for(int i = 0; i < MainActivity.arrayFurti.size(); i++){
-                    MainActivity.addMakerFurtoMap(MainActivity.arrayFurti.get(i));
+                    //MainActivity.addMakerFurtoMap(MainActivity.arrayFurti.get(i));
+                    MainActivity.mMapManager.addMakerFurtoMap(MainActivity.arrayFurti.get(i));
                 }
                 is_furti_caricatti = true;
             }

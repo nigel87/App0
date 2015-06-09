@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.location.Location;
 import android.os.Bundle;
 import android.provider.Settings;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -20,6 +21,7 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
+import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
@@ -37,7 +39,7 @@ public class MainActivity extends ActionBarActivity implements TouchableWrapper.
 
     private static final int REQUEST_STATE = 0;
     private static final int FAVORITI_STATE = 5;
-    private static final int INFO_FURTO_STATE = 2;
+    public static final int INFO_FURTO_STATE = 2;
 
 
     private static GoogleMap mMap; // Might be null if Google Play services APK is not available.
@@ -56,9 +58,16 @@ public class MainActivity extends ActionBarActivity implements TouchableWrapper.
 
     private static Polizia polizia;
 
-    Location location;
+    public static Location location;
 
     ServerAPI api;
+
+
+    public static FragmentManager fragmentManager;
+    public static GestioneMappa mMapManager;
+
+
+
    public static ServerAPI staticapi;
 
 
@@ -78,9 +87,12 @@ public class MainActivity extends ActionBarActivity implements TouchableWrapper.
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         MainActivity.context = getApplicationContext();
+        fragmentManager = getSupportFragmentManager();
+        mMapManager = new GestioneMappa();
 
         mLocationListener = new MyLocationListener();
-        setUpMapIfNeeded();
+        //setUpMapIfNeeded();
+        mMapManager.setUpMap();
 
         nitView();
         if (toolbar != null) {
@@ -90,6 +102,13 @@ public class MainActivity extends ActionBarActivity implements TouchableWrapper.
 
         }
         initDrawer();
+        final GestioneNotifiche mNotifiche = new GestioneNotifiche();
+        api.furti(mLocationListener.mLoc.getLatitude(), mLocationListener.mLoc.getLongitude());
+        api.fav();
+        api.police(mLocationListener.mLoc.getLatitude(), mLocationListener.mLoc.getLongitude());
+
+
+
 
         /*
         *
@@ -100,7 +119,8 @@ public class MainActivity extends ActionBarActivity implements TouchableWrapper.
             public void onItemClick(AdapterView parent, View view, int position, long id) {
                 switch (position) {
                     case 0://home
-                        mMap.clear();
+                        //mMap.clear();
+                        mMapManager.getMap().clear();
                         restartMap2();
                         drawerLayout.closeDrawer(R.id.drawer_layout);
                         break;
@@ -108,20 +128,27 @@ public class MainActivity extends ActionBarActivity implements TouchableWrapper.
                         // aggiungereFurto( view); //come test apre la pagina di un nuovo furto
                         break;
                     case 2: //Carabinieri
-                        mMap.clear();
+                        //mMap.clear();
+                        mMapManager.getMap().clear();
                         if (polizia != null) {
                             //Para mostrar latitud y longitud por pantalla
                             String name = polizia.mIndirizzo;
-                            mMap.addMarker(new MarkerOptions().position(new LatLng(polizia.getmLatitude(), polizia.getmLongitude()))
+                            /*mMap.addMarker(new MarkerOptions().position(new LatLng(polizia.getmLatitude(), polizia.getmLongitude()))
                                     .title(name)
                                     .snippet(polizia.mPhone)
                                     .icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_carabbinieri)));
-                            mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(polizia.getmLatitude(), polizia.getmLongitude()), 16));
-
+                            mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(polizia.getmLatitude(), polizia.getmLongitude()), 16));*/
+                            MarkerOptions markerOptions = new MarkerOptions().position(new LatLng(polizia.getmLatitude(), polizia.getmLongitude()))
+                                    .title(name)
+                                    .snippet(polizia.mPhone)
+                                    .icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_carabbinieri));
+                            mMapManager.addMarker(markerOptions);
+                            mMapManager.moveCameraTo(new LatLng(polizia.getmLatitude(), polizia.getmLongitude()), 16);
                             drawerLayout.closeDrawer(R.id.drawer_layout);
                         }
                         break;
                     case 3: //Notifiche
+                        mNotifiche.generateNotifiche(arrayFurti.get(0), arrayFavoriti.get(0).getNome());
                         break;
                     case 4: //Mie segnalazioni
                         break;
@@ -131,14 +158,9 @@ public class MainActivity extends ActionBarActivity implements TouchableWrapper.
             }
         });
 
-      api.furti(mLocationListener.mLoc.getLatitude(), mLocationListener.mLoc.getLongitude());
-        api.fav();
-   api.police(mLocationListener.mLoc.getLatitude(), mLocationListener.mLoc.getLongitude());
-
-
        /* Setting a custom info window adapter for the google map
                 * */
-        mMap.setInfoWindowAdapter(new GoogleMap.InfoWindowAdapter() {
+        mMapManager.getMap().setInfoWindowAdapter(new GoogleMap.InfoWindowAdapter() {
 
             // Use default InfoWindow frame
             @Override
@@ -151,9 +173,7 @@ public class MainActivity extends ActionBarActivity implements TouchableWrapper.
 
             public View getInfoContents(Marker marker) {
 
-
-
-                switch (marker.getTitle()){
+                switch (marker.getTitle()) {
                     case "My Position":
                         // Getting view from the layout file info_window_layout
                         View p = getLayoutInflater().inflate(R.layout.info_marker_furto, null);
@@ -168,8 +188,8 @@ public class MainActivity extends ActionBarActivity implements TouchableWrapper.
                         TextView tvPosLon = (TextView) p.findViewById(R.id.tv_ora);
 
                         tvPosName.setText("My Location");
-                        tvPosLat.setText("Lat:" + mLocationListener.mLoc.getLatitude());
-                        tvPosLon.setText("Lon: " + mLocationListener.mLoc.getLongitude());
+                        tvPosLat.setText("Lat:" + MainActivity.mLocationListener.mLoc.getLatitude());
+                        tvPosLon.setText("Lon: " + MainActivity.mLocationListener.mLoc.getLongitude());
                         return p;
 
                     case "Favoriti":
@@ -182,7 +202,7 @@ public class MainActivity extends ActionBarActivity implements TouchableWrapper.
                         // Getting reference to the TextView to set Date
                         TextView tvFavIndirizzo = (TextView) f.findViewById(R.id.tv_indirizzo);
 
-                        Favoriti newFav = arrayFavoriti.get(0);     //TODO: Provisional
+                        Favoriti newFav = MainActivity.getArrayFavoriti().get(0);     //TODO: Provisional
 
                         // Setting the Name, Date & Ora
                         tvFavName.setText(newFav.getNome());
@@ -205,8 +225,8 @@ public class MainActivity extends ActionBarActivity implements TouchableWrapper.
 
                         // Setting the Name, Date & Ora
                         tvCName.setText("Carabinieri");
-                        tvCIndirizzo.setText(polizia.getIndirizzo());
-                        tvCPhone.setText("Phone: " + polizia.mPhone);
+                        tvCIndirizzo.setText(MainActivity.getPolizia().getIndirizzo());
+                        tvCPhone.setText("Phone: " + MainActivity.getPolizia().mPhone);
                         return c;
 
                     default:
@@ -222,7 +242,7 @@ public class MainActivity extends ActionBarActivity implements TouchableWrapper.
                         // Getting reference to the TextView to set Ora
                         TextView tvOra = (TextView) v.findViewById(R.id.tv_ora);
 
-                        Furto furto = getFurto(marker.getId());
+                        Furto furto = MainActivity.getFurto(marker.getId());
 
                         // Setting the Name, Date & Ora
                         tvName.setText(furto.mTitolo);
@@ -231,15 +251,12 @@ public class MainActivity extends ActionBarActivity implements TouchableWrapper.
                         return v;
 
                 }
-                // Returning the view containing InfoWindow contents
-
-
             }
         });
-/*
-       *Listener Click in Info Windows di Markers
+        /*
+        *   Listener Click in Info Windows di Markers
         */
-        mMap.setOnInfoWindowClickListener(new GoogleMap.OnInfoWindowClickListener() {
+        mMapManager.getMap().setOnInfoWindowClickListener(new GoogleMap.OnInfoWindowClickListener() {
 
             @Override
             public void onInfoWindowClick(Marker marker) {
@@ -302,14 +319,14 @@ public class MainActivity extends ActionBarActivity implements TouchableWrapper.
         drawerLayout.setDrawerListener(drawerToggle);
     }
 
-
+    public static Polizia getPolizia(){    return polizia; }
 
     @Override
     protected void onResume()
     {
         super.onResume();
         mLocationListener.update();
-        setUpMapIfNeeded();
+        mMapManager.setUpMapIfNeeded();
     }
 
     @Override
@@ -341,12 +358,19 @@ public class MainActivity extends ActionBarActivity implements TouchableWrapper.
      Favoriti newFavorito = arrayFavoriti.get(position);
 
         //Decide between the different makers
-        mMap.addMarker(new MarkerOptions().position(new LatLng(newFavorito.mLatitude, newFavorito.mLongitude))
+        /*mMap.addMarker(new MarkerOptions().position(new LatLng(newFavorito.mLatitude, newFavorito.mLongitude))
                 .title("Favoriti")
                         //     .snippet(newFnewFavoritourto.mMostrare) //drawable/btn_star
                 .icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_star_small)));
 
-        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(newFavorito.mLatitude, newFavorito.mLongitude), 16));
+        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(newFavorito.mLatitude, newFavorito.mLongitude), 16));*/
+        MarkerOptions markerOptions = new MarkerOptions().position(new LatLng(newFavorito.mLatitude, newFavorito.mLongitude))
+                .title("Favoriti")
+                        //     .snippet(newFnewFavoritourto.mMostrare) //drawable/btn_star
+                .icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_star_small));
+        mMapManager.addMarker(markerOptions);
+        mMapManager.moveCameraTo(new LatLng(newFavorito.mLatitude, newFavorito.mLongitude), 16);
+
     }
 
     @Override
@@ -362,7 +386,7 @@ public class MainActivity extends ActionBarActivity implements TouchableWrapper.
     /**
      * Recarga el mapa si se necesita
      */
-    private void setUpMapIfNeeded() {
+   /* private void setUpMapIfNeeded() {
         // Do a null check to confirm that we have not already instantiated the map.
         if (mMap == null) {
             // Try to obtain the map from the SupportMapFragment.
@@ -373,13 +397,13 @@ public class MainActivity extends ActionBarActivity implements TouchableWrapper.
                 setUpMap();
             }
         }
-    }
+    }*/
 
     /**
      * Localiza las coordenadas de tu dispositivo. Situa la camara y un marcador sobre la posición indicada
      * mediante la longitud y la latitud de tu dispositivo.
      */
-    private void setUpMap() {
+   /* private void setUpMap() {
 
         location=mLocationListener.mLoc;
 
@@ -393,7 +417,7 @@ public class MainActivity extends ActionBarActivity implements TouchableWrapper.
                 .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE)));
         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(mLocationListener.mLoc.getLatitude(), mLocationListener.mLoc.getLongitude()), 16));
 
-    }
+    }*/
 
     /**
      * Aggiungere un nuovo furto --> Nuova View di Nuovo Furto
@@ -406,8 +430,10 @@ public class MainActivity extends ActionBarActivity implements TouchableWrapper.
     public void newFurto()
     {
         Furto newFurto = arrayFurti.get(arrayFurti.size() - 1);
-        addMakerFurtoMap(newFurto);
-        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(newFurto.mLatitude, newFurto.mLongitude), 16));
+        //addMakerFurtoMap(newFurto);
+        mMapManager.addMakerFurtoMap(newFurto);
+        //mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(newFurto.mLatitude, newFurto.mLongitude), 16));
+        mMapManager.moveCameraTo(new LatLng(newFurto.mLatitude, newFurto.mLongitude), 16);
         api.addfurto(newFurto);
     }
 
@@ -478,13 +504,8 @@ public class MainActivity extends ActionBarActivity implements TouchableWrapper.
     {
         for(int i = 0; i < arrayFurti.size(); i++)
             if (arrayFurti.get(i).mIdMarker==null)
-            MainActivity.addMakerFurtoMap(arrayFurti.get(i));
-
-     /*   mMap.addMarker(new MarkerOptions().position(new LatLng(initLat,initLon))
-                .title("Posizione " )
-                .snippet("" + initLat+ " " +initLon)
-                .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE)));
-        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(initLat,initLon), 16));*/
+            //MainActivity.addMakerFurtoMap(arrayFurti.get(i));
+                mMapManager.addMakerFurtoMap(arrayFurti.get(i));
     }
 
 
@@ -496,20 +517,21 @@ public class MainActivity extends ActionBarActivity implements TouchableWrapper.
     public   void restartMap2 ()
     {
         for(int i = 0; i < arrayFurti.size(); i++)
-              MainActivity.addMakerFurtoMap(arrayFurti.get(i));
-
+              //MainActivity.addMakerFurtoMap(arrayFurti.get(i));
+                mMapManager.addMakerFurtoMap(arrayFurti.get(i));
 
         mLocationListener.update();
 
-        mMap.addMarker(new MarkerOptions().position(new LatLng(mLocationListener.mLoc.getLatitude(),mLocationListener.mLoc.getLongitude()))
+        /*mMap.addMarker(new MarkerOptions().position(new LatLng(mLocationListener.mLoc.getLatitude(),mLocationListener.mLoc.getLongitude()))
                 .title("Posizione " )
                 .snippet("" + mLocationListener.mLoc.getLatitude()+ " " +mLocationListener.mLoc.getLongitude())
                 .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE)));
 
-        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(mLocationListener.mLoc.getLatitude(),mLocationListener.mLoc.getLongitude()), 16));
+        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(mLocationListener.mLoc.getLatitude(),mLocationListener.mLoc.getLongitude()), 16));*/
+        mMapManager.setUpMap();
     }
 
-
+/*
     public static void addMakerFurtoMap(Furto newFurto){
         //Decide between the different makers
         int idDrawable;
@@ -541,10 +563,10 @@ public class MainActivity extends ActionBarActivity implements TouchableWrapper.
                 .icon(BitmapDescriptorFactory.fromResource(idDrawable)));
         newFurto.mIdMarker = newMarker.getId();
         newMarker.isInfoWindowShown();
-    }
+    }*/
 
 
-    public Furto getFurto(String idMarker){
+    public static Furto getFurto(String idMarker){
         Furto f = new Furto();
         for(int i = 0; i < arrayFurti.size(); i++){
             if(idMarker.matches(arrayFurti.get(i).mIdMarker))
@@ -570,7 +592,7 @@ public class MainActivity extends ActionBarActivity implements TouchableWrapper.
     @Override
     public void onUpdateMapAfterUserInterection() {
       //  Toast.makeText(MainActivity.getAppContext(), "Map Updated ", Toast.LENGTH_SHORT).show();
-       LatLng latLng= mMap.getCameraPosition().target;
+       LatLng latLng= mMapManager.getMap().getCameraPosition().target;
 
         Location new_location = new Location("new location");
         new_location.setLatitude(latLng.latitude);
