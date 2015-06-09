@@ -17,11 +17,8 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
-import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
-import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
-import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
@@ -67,7 +64,9 @@ public class MainActivity extends ActionBarActivity implements TouchableWrapper.
     public static GestioneMappa mMapManager;
 
 
-
+    public static GoogleMap getMap(){
+        return mMap;
+    }
    public static ServerAPI staticapi;
 
 
@@ -514,7 +513,7 @@ public class MainActivity extends ActionBarActivity implements TouchableWrapper.
     /*Riaggiunge sulla mappa i marker per tutti i furti presenti nel array arrayFurti,
     * e vissualizza la posizione corente
     * */
-    public   void restartMap2 ()
+    public static  void restartMap2 ()
     {
         for(int i = 0; i < arrayFurti.size(); i++)
               //MainActivity.addMakerFurtoMap(arrayFurti.get(i));
