@@ -60,6 +60,10 @@ public class MainActivity extends ActionBarActivity implements TouchableWrapper.
     Location location;
 
     ServerAPI api;
+
+    public static GoogleMap getMap()
+    {return mMap;}
+
    public static ServerAPI staticapi;
 
 
@@ -69,6 +73,9 @@ public class MainActivity extends ActionBarActivity implements TouchableWrapper.
 
     public static void setPolizia(Polizia polizia) {
         MainActivity.polizia = polizia;
+    }
+    public static Polizia getPolizia() {
+        return  polizia;
     }
 
     @Override
@@ -92,49 +99,14 @@ public class MainActivity extends ActionBarActivity implements TouchableWrapper.
         }
         initDrawer();
 
-        /*
-        *
-        * Gestisce il click ai bottoni della barra sinistra
-        * */
-        leftDrawerList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView parent, View view, int position, long id) {
-                switch (position) {
-                    case 0://home
-                        mMap.clear();
-                        restartMap2();
-                        drawerLayout.closeDrawer(R.id.drawer_layout);
-                        break;
-                    case 1://Tipo di furto
-                        // aggiungereFurto( view); //come test apre la pagina di un nuovo furto
-                        break;
-                    case 2: //Carabinieri
-                        mMap.clear();
-                        if (polizia != null) {
-                            //Para mostrar latitud y longitud por pantalla
-                            String name = polizia.mIndirizzo;
-                            mMap.addMarker(new MarkerOptions().position(new LatLng(polizia.getmLatitude(), polizia.getmLongitude()))
-                                    .title(name)
-                                    .snippet(polizia.mPhone)
-                                    .icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_carabbinieri)));
-                            mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(polizia.getmLatitude(), polizia.getmLongitude()), 16));
 
-                            drawerLayout.closeDrawer(R.id.drawer_layout);
-                        }
-                        break;
-                    case 3: //Notifiche
-                        break;
-                    case 4: //Mie segnalazioni
-                        break;
-                    case 5: //Informazioni
-                        break;
-                }
-            }
-        });
+        //Assegna la classe che gestisce il click ai bottoni della barra sinistra
+        leftDrawerList.setOnItemClickListener(new GestisciBarraSinistra(drawerLayout));
 
-      api.furti(mLocationListener.mLoc.getLatitude(), mLocationListener.mLoc.getLongitude());
+        //Chiama le appi del server per ottenere la lista dei furti, la lista dei favoriti e la polizia piu vicina
+        api.furti(mLocationListener.mLoc.getLatitude(), mLocationListener.mLoc.getLongitude());
         api.fav();
-   api.police(mLocationListener.mLoc.getLatitude(), mLocationListener.mLoc.getLongitude());
+        api.police(mLocationListener.mLoc.getLatitude(), mLocationListener.mLoc.getLongitude());
 
 
        /* Setting a custom info window adapter for the google map
@@ -153,8 +125,7 @@ public class MainActivity extends ActionBarActivity implements TouchableWrapper.
             public View getInfoContents(Marker marker) {
 
 
-
-                switch (marker.getTitle()){
+                switch (marker.getTitle()) {
                     case "My Position":
                         // Getting view from the layout file info_window_layout
                         View p = getLayoutInflater().inflate(R.layout.info_marker_furto, null);
@@ -245,7 +216,7 @@ public class MainActivity extends ActionBarActivity implements TouchableWrapper.
             @Override
             public void onInfoWindowClick(Marker marker) {
 
-                switch(marker.getTitle()){
+                switch (marker.getTitle()) {
                     case "My Position":
                         Toast.makeText(MainActivity.getAppContext(), "Posizione attuale", Toast.LENGTH_SHORT).show();
                         break;
@@ -386,7 +357,7 @@ public class MainActivity extends ActionBarActivity implements TouchableWrapper.
         String name = "My Position";
         String coord = mLocationListener.mLoc.getLatitude() + ", " +mLocationListener.mLoc.getLongitude();
 
-        mMap.addMarker(new MarkerOptions()  .position(new LatLng(mLocationListener.mLoc.getLatitude(), mLocationListener.mLoc.getLongitude()))
+        mMap.addMarker(new MarkerOptions().position(new LatLng(mLocationListener.mLoc.getLatitude(), mLocationListener.mLoc.getLongitude()))
                 .title(name)
                 .snippet(coord)
                 .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE)));
@@ -473,7 +444,7 @@ public class MainActivity extends ActionBarActivity implements TouchableWrapper.
     /*Riaggiunge sulla mappa i marker per tutti i furti presenti nel array arrayFurti,
     * e vissualizza la posizione corente
     * */
-    public   void restartMap ()
+    public  static void restartMap ()
     {
         for(int i = 0; i < arrayFurti.size(); i++)
             if (arrayFurti.get(i).mIdMarker==null)
@@ -492,7 +463,7 @@ public class MainActivity extends ActionBarActivity implements TouchableWrapper.
     /*Riaggiunge sulla mappa i marker per tutti i furti presenti nel array arrayFurti,
     * e vissualizza la posizione corente
     * */
-    public   void restartMap2 ()
+    public static  void restartMap2 ()
     {
         for(int i = 0; i < arrayFurti.size(); i++)
               MainActivity.addMakerFurtoMap(arrayFurti.get(i));
@@ -500,12 +471,12 @@ public class MainActivity extends ActionBarActivity implements TouchableWrapper.
 
         mLocationListener.update();
 
-        mMap.addMarker(new MarkerOptions().position(new LatLng(mLocationListener.mLoc.getLatitude(),mLocationListener.mLoc.getLongitude()))
-                .title("Posizione " )
-                .snippet("" + mLocationListener.mLoc.getLatitude()+ " " +mLocationListener.mLoc.getLongitude())
+        mMap.addMarker(new MarkerOptions().position(new LatLng(mLocationListener.mLoc.getLatitude(), mLocationListener.mLoc.getLongitude()))
+                .title("Posizione ")
+                .snippet("" + mLocationListener.mLoc.getLatitude() + " " + mLocationListener.mLoc.getLongitude())
                 .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE)));
 
-        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(mLocationListener.mLoc.getLatitude(),mLocationListener.mLoc.getLongitude()), 16));
+        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(mLocationListener.mLoc.getLatitude(), mLocationListener.mLoc.getLongitude()), 16));
     }
 
 

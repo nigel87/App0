@@ -40,7 +40,8 @@ public class GestionePreferiti extends ActionBarActivity {
             setupToolbar();
             ListView listafavoriti = (ListView) findViewById(R.id.favlist);
             li.add(favoriti.getNome());
-            ArrayAdapter adapter = new ArrayAdapter<>(getAppContext(), android.R.layout.simple_list_item_1, li);
+            ArrayAdapter adapter = new ArrayAdapter<>(getAppContext(), android.R.layout.list_content, li);
+
             listafavoriti.setAdapter(adapter);
             listafavoriti.setOnItemClickListener(new Gestisci());
         }
