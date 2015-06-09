@@ -113,49 +113,7 @@ public class MainActivity extends ActionBarActivity implements TouchableWrapper.
         *
         * Gestisce il click ai bottoni della barra sinistra
         * */
-        leftDrawerList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView parent, View view, int position, long id) {
-                switch (position) {
-                    case 0://home
-                        //mMap.clear();
-                        mMapManager.getMap().clear();
-                        restartMap2();
-                        drawerLayout.closeDrawer(R.id.drawer_layout);
-                        break;
-                    case 1://Tipo di furto
-                        // aggiungereFurto( view); //come test apre la pagina di un nuovo furto
-                        break;
-                    case 2: //Carabinieri
-                        //mMap.clear();
-                        mMapManager.getMap().clear();
-                        if (polizia != null) {
-                            //Para mostrar latitud y longitud por pantalla
-                            String name = polizia.mIndirizzo;
-                            /*mMap.addMarker(new MarkerOptions().position(new LatLng(polizia.getmLatitude(), polizia.getmLongitude()))
-                                    .title(name)
-                                    .snippet(polizia.mPhone)
-                                    .icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_carabbinieri)));
-                            mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(polizia.getmLatitude(), polizia.getmLongitude()), 16));*/
-                            MarkerOptions markerOptions = new MarkerOptions().position(new LatLng(polizia.getmLatitude(), polizia.getmLongitude()))
-                                    .title(name)
-                                    .snippet(polizia.mPhone)
-                                    .icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_carabbinieri));
-                            mMapManager.addMarker(markerOptions);
-                            mMapManager.moveCameraTo(new LatLng(polizia.getmLatitude(), polizia.getmLongitude()), 16);
-                            drawerLayout.closeDrawer(R.id.drawer_layout);
-                        }
-                        break;
-                    case 3: //Notifiche
-                        mNotifiche.generateNotifiche(arrayFurti.get(0), arrayFavoriti.get(0).getNome());
-                        break;
-                    case 4: //Mie segnalazioni
-                        break;
-                    case 5: //Informazioni
-                        break;
-                }
-            }
-        });
+        leftDrawerList.setOnItemClickListener(new GestisciBarraSinistra(drawerLayout));
 
        /* Setting a custom info window adapter for the google map
                 * */
