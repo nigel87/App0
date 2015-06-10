@@ -29,6 +29,10 @@
     <string name="BottoneAggiungiFav">Aggiungi un nuovo preferito</string>
     <string name="Bottone_anulla_ancellazione_favortiti">Anulla</string>
     <string name="Bottone_elimina_favorito">Elimina</string>
+    <string name="Informazioni">Applicazzione svlipuata per il corso di Interazion su Web, Universita La Sapeinza. Studenti: Nigel , Dani, Xavi.
+      \n\n  Questa applicazione offre la possibilita di segnlare i furti subbiti, e vissualizzare i furti segnalati da gli altri uttenti
+    \n\n Aggiungendo una zona ai preferiti, ogni volta che vicino a quella zona viene segnalato un furto si riceverera una notifica</string>
+    <string name="logo_sapienzza">Logo universita la Sapienza</string>
 
 
 </resources>

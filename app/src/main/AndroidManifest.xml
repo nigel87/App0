@@ -77,6 +77,13 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.example.daniel.app0.MainActivity" />
         </activity>
+        <activity
+            android:name=".Informazioni"
+            android:label="Infromazioni sull app" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".MainActivity" />
+        </activity>
     </application>
 
 </manifest>

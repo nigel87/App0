@@ -121,7 +121,7 @@ public class MainActivity extends ActionBarActivity implements TouchableWrapper.
     {
         leftDrawerList = (ListView) findViewById(R.id.left_drawer);
         toolbar = (Toolbar) findViewById(R.id.toolbar);
-        drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
+        drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout_left);
         barasinistra = getResources().getStringArray(R.array.bara_sinistra);
         navigationDrawerAdapter = new ArrayAdapter<>(MainActivity.this, android.R.layout.simple_list_item_1, barasinistra);
         leftDrawerList.setAdapter(navigationDrawerAdapter);

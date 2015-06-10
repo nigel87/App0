@@ -1,5 +1,6 @@
 package com.example.daniel.app0;
 
+import android.content.Intent;
 import android.support.v4.widget.DrawerLayout;
 import android.view.View;
 import android.widget.AdapterView;
@@ -19,13 +20,15 @@ public class GestisciBarraSinistra implements AdapterView.OnItemClickListener {
         drawerLayout=dl;
     }
 
+
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         switch (position) {
+
             case 0://home
                 MainActivity.mMapManager.getMap().clear();
                 MainActivity.restartMap2();
-             // drawerLayout.closeDrawer(R.id.left_drawer);
+              drawerLayout.closeDrawers();
                 break;
             case 1://Tipo di furto
                 // aggiungereFurto( view); //come test apre la pagina di un nuovo furto
@@ -42,7 +45,7 @@ public class GestisciBarraSinistra implements AdapterView.OnItemClickListener {
                             .icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_carabbinieri)));
                     MainActivity.mMapManager.getMap().moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(polizia.getmLatitude(), polizia.getmLongitude()), 16));
 
-                 //  drawerLayout.closeDrawer(R.id.drawer_layout);
+                  drawerLayout.closeDrawers();
                 }
                 break;
             case 3: //Notifiche
@@ -50,6 +53,9 @@ public class GestisciBarraSinistra implements AdapterView.OnItemClickListener {
             case 4: //Mie segnalazioni
                 break;
             case 5: //Informazioni
+                Intent intent = new Intent(MainActivity.getAppContext(), Informazioni.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                MainActivity.getAppContext().startActivity(intent);
                 break;
         }
     }
