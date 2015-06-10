@@ -27,6 +27,8 @@
     <string name="NessunPreferitoTitolo">Nessun preferito trovato</string>
     <string name="NessunPreferitoSototitolo">Inserendo un preferito si possono ricevere notifiche rigardo ai furti segnalati in zona</string>
     <string name="BottoneAggiungiFav">Aggiungi un nuovo preferito</string>
+    <string name="Bottone_anulla_ancellazione_favortiti">Anulla</string>
+    <string name="Bottone_elimina_favorito">Elimina</string>
 
 
 </resources>

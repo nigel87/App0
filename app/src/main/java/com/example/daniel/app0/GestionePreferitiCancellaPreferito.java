@@ -30,6 +30,7 @@ public class GestionePreferitiCancellaPreferito extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_checkbox);
+        setupToolbar();
 
         for (int i=0;i<MainActivity.getArrayPreferiti().size();i++)
             li.add(MainActivity.getArrayPreferiti().get(i).getNome());
@@ -46,6 +47,21 @@ public class GestionePreferitiCancellaPreferito extends ActionBarActivity {
         Intent intent = new Intent(this,GestionePreferiti.class);
         setResult(Activity.RESULT_CANCELED, intent);
         GestionePreferitiCancellaPreferito.this.finish();
+    }
+
+
+    public void setupToolbar(){
+        android.support.v7.widget.Toolbar toolbar = (android.support.v7.widget.Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onBackPressed();
+            }
+        });
     }
 
     public void eliminaFav(View view)
