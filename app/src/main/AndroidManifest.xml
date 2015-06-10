@@ -49,6 +49,14 @@
                 android:value="com.example.daniel.app0.MainActivity" />
         </activity>
         <activity
+            android:name=".GestionePreferitiCancellaPreferito"
+            android:label="@string/title_activity_gestire_preferiti" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.example.daniel.app0.GestionePreferiti" />
+        </activity>
+
+        <activity
             android:name=".NuovoPreferito"
             android:label="@string/title_activity_aggiungere_preferito" >
             <meta-data

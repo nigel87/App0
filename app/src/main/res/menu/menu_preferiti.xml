@@ -5,7 +5,7 @@
     tools:context=".MainActivity">
 
     <item
-        android:id="@+id/action_favorites"
+        android:id="@+id/action_delete_preferiti"
         android:title="@string/action_preferiti"
         android:orderInCategory="100"
         app:showAsAction="ifRoom"

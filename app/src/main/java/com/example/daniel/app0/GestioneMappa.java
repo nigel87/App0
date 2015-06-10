@@ -193,7 +193,7 @@ public class GestioneMappa {
         CameraPosition cameraPosition = new CameraPosition.Builder()
                 .target(nPos)      // Sets the center of the map to mi position
                 .zoom(nZoom)                   // Sets the zoom
-                .bearing(90)                // Sets the orientation of the camera to east
+                .bearing(0)                // Sets the orientation of the camera to east
                 .build();                   // Creates a CameraPosition from the builder
         mMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
     }

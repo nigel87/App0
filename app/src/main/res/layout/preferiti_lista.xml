@@ -19,7 +19,7 @@
         android:layout_width="wrap_content"
         android:layout_height="240dp"
         android:layout_below="@+id/linearLayout"
-        android:id="@+id/relativeLayout">
+        android:id="@+id/relativeLayoutPreferiti">
 
         <ListView
             android:layout_width="match_parent"
@@ -29,6 +29,7 @@
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
             />
+
     </RelativeLayout>
 
     <Button
@@ -40,7 +41,7 @@
         android:onClick="nuovoFavorito"
         android:textColor="@color/accent_material_light"
         android:layout_marginTop="40dp"
-        android:layout_below="@+id/relativeLayout"
+        android:layout_below="@+id/relativeLayoutPreferiti"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
         android:layout_marginRight="42dp"
