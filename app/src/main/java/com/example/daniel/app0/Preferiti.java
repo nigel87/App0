@@ -16,6 +16,7 @@ public class Preferiti {
     String mIndirizzo;
     public double mLatitude;
     public double mLongitude;
+    String idMarker;
 
 
     public Preferiti(String nome, String indirizzo)
@@ -40,6 +41,12 @@ public class Preferiti {
     public String getIndirizzo()
     {
         return mIndirizzo;
+    }
+    public String getIdMarker(){
+        return idMarker;
+    }
+    public void setIdMarker(String id){
+        idMarker = id;
     }
 
 
