@@ -101,139 +101,19 @@ public class MainActivity extends ActionBarActivity implements TouchableWrapper.
         api.fav();
         api.police(mLocationListener.mLoc.getLatitude(), mLocationListener.mLoc.getLongitude());
 
-
-
-
         /*
         *
         * Gestisce il click ai bottoni della barra sinistra
         * */
         leftDrawerList.setOnItemClickListener(new GestisciBarraSinistra(drawerLayout));
 
-       /* Setting a custom info window adapter for the google map
-                * */
-        mMapManager.getMap().setInfoWindowAdapter(new GoogleMap.InfoWindowAdapter() {
-
-            // Use default InfoWindow frame
-            @Override
-            public View getInfoWindow(Marker arg0) {
-                return null;
-            }
-
-            // Defines the contents of the InfoWindow
-            @Override
-
-            public View getInfoContents(Marker marker) {
-
-                switch (marker.getTitle()) {
-                    case "My Position":
-                        // Getting view from the layout file info_window_layout
-                        View p = getLayoutInflater().inflate(R.layout.info_marker_furto, null);
-
-                        // Getting reference to the TextView to set Name
-                        TextView tvPosName = (TextView) p.findViewById(R.id.tv_name);
-
-                        // Getting reference to the TextView to set Date
-                        TextView tvPosLat = (TextView) p.findViewById(R.id.tv_date);
-
-                        // Getting reference to the TextView to set Ora
-                        TextView tvPosLon = (TextView) p.findViewById(R.id.tv_ora);
-
-                        tvPosName.setText("My Location");
-                        tvPosLat.setText("Lat:" + MainActivity.mLocationListener.mLoc.getLatitude());
-                        tvPosLon.setText("Lon: " + MainActivity.mLocationListener.mLoc.getLongitude());
-                        return p;
-
-                    case "Favoriti":
-                        // Getting view from the layout file info_window_layout
-                        View f = getLayoutInflater().inflate(R.layout.info_marker_fav, null);
-
-                        // Getting reference to the TextView to set Name
-                        TextView tvFavName = (TextView) f.findViewById(R.id.tv_name);
-
-                        // Getting reference to the TextView to set Date
-                        TextView tvFavIndirizzo = (TextView) f.findViewById(R.id.tv_indirizzo);
-
-                        Preferiti newFav = MainActivity.getArrayPreferiti().get(0);     //TODO: Provisional
-
-                        // Setting the Name, Date & Ora
-                        tvFavName.setText(newFav.getNome());
-                        tvFavIndirizzo.setText(newFav.getIndirizzo());
-                        return f;
-
-                    case "Carabinieri":
-                        // Getting view from the layout file info_window_layout
-                        View c = getLayoutInflater().inflate(R.layout.info_marker_carabinieri, null);
-
-                        // Getting reference to the TextView to set Name
-                        TextView tvCName = (TextView) c.findViewById(R.id.tv_name);
-
-                        // Getting reference to the TextView to set Date
-                        TextView tvCIndirizzo = (TextView) c.findViewById(R.id.tv_indirizzo);
-
-                        // Getting reference to the TextView to set Ora
-                        TextView tvCPhone = (TextView) c.findViewById(R.id.tv_phone);
-
-
-                        // Setting the Name, Date & Ora
-                        tvCName.setText("Carabinieri");
-                        tvCIndirizzo.setText(MainActivity.getPolizia().getIndirizzo());
-                        tvCPhone.setText("Phone: " + MainActivity.getPolizia().mPhone);
-                        return c;
-
-                    default:
-                        // Getting view from the layout file info_window_layout
-                        View v = getLayoutInflater().inflate(R.layout.info_marker_furto, null);
-
-                        // Getting reference to the TextView to set Name
-                        TextView tvName = (TextView) v.findViewById(R.id.tv_name);
-
-                        // Getting reference to the TextView to set Date
-                        TextView tvDate = (TextView) v.findViewById(R.id.tv_date);
-
-                        // Getting reference to the TextView to set Ora
-                        TextView tvOra = (TextView) v.findViewById(R.id.tv_ora);
-
-                        Furto furto = MainActivity.getFurto(marker.getId());
-
-                        // Setting the Name, Date & Ora
-                        tvName.setText(furto.mTitolo);
-                        tvDate.setText("Date:" + furto.mDate);
-                        tvOra.setText("Fascia Oraria: " + furto.mOra);
-                        return v;
-
-                }
-            }
-        });
         /*
-        *   Listener Click in Info Windows di Markers
-        */
-        mMapManager.getMap().setOnInfoWindowClickListener(new GoogleMap.OnInfoWindowClickListener() {
+        *   Gestiscel?infoWindows de le markers
+         */
+        mMapManager.getMap().setInfoWindowAdapter(new GestioneInfoWindows(getLayoutInflater()));
+        mMapManager.getMap().setOnInfoWindowClickListener(new GestioneInfoWindowsClick(this));
 
-            @Override
-            public void onInfoWindowClick(Marker marker) {
 
-                switch(marker.getTitle()){
-                    case "My Position":
-                        Toast.makeText(MainActivity.getAppContext(), "Posizione attuale", Toast.LENGTH_SHORT).show();
-                        break;
-                    case "Favoriti":
-                        break;
-                    case "Carabinieri":
-                        break;
-                    default:
-                        for (int i = 0; i < arrayFurti.size(); i++) {
-                            if (marker.getId().matches(arrayFurti.get(i).mIdMarker)) {
-                                Furto furto = getFurto(marker.getId());
-                                Intent intent = new Intent(MainActivity.this, InfoFurtoActivity.class);
-                                intent.putExtra("idFurto", furto.mId);
-                                MainActivity.this.startActivityForResult(intent, INFO_FURTO_STATE);
-                            }
-                        }
-                        break;
-                }
-            }
-        });
 
     }
 
@@ -310,12 +190,6 @@ public class MainActivity extends ActionBarActivity implements TouchableWrapper.
      Preferiti newPreferito = arrayPreferiti.get(position);
 
         //Decide between the different makers
-        /*mMap.addMarker(new MarkerOptions().position(new LatLng(newFavorito.mLatitude, newFavorito.mLongitude))
-                .title("Favoriti")
-                        //     .snippet(newFnewFavoritourto.mMostrare) //drawable/btn_star
-                .icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_star_small)));
-
-        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(newFavorito.mLatitude, newFavorito.mLongitude), 16));*/
         MarkerOptions markerOptions = new MarkerOptions().position(new LatLng(newPreferito.mLatitude, newPreferito.mLongitude))
                 .title("Favoriti")
                         //     .snippet(newFnewFavoritourto.mMostrare) //drawable/btn_star
@@ -336,42 +210,6 @@ public class MainActivity extends ActionBarActivity implements TouchableWrapper.
 
 
     /**
-     * Recarga el mapa si se necesita
-     */
-   /* private void setUpMapIfNeeded() {
-        // Do a null check to confirm that we have not already instantiated the map.
-        if (mMap == null) {
-            // Try to obtain the map from the SupportMapFragment.
-            mMap = ((SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map))
-                    .getMap();
-            // Check if we were successful in obtaining the map.
-            if (mMap != null) {
-                setUpMap();
-            }
-        }
-    }*/
-
-    /**
-     * Localiza las coordenadas de tu dispositivo. Situa la camara y un marcador sobre la posición indicada
-     * mediante la longitud y la latitud de tu dispositivo.
-     */
-   /* private void setUpMap() {
-
-        location=mLocationListener.mLoc;
-
-        //Para mostrar latitud y longitud por pantalla
-        String name = "My Position";
-        String coord = mLocationListener.mLoc.getLatitude() + ", " +mLocationListener.mLoc.getLongitude();
-
-        mMap.addMarker(new MarkerOptions()  .position(new LatLng(mLocationListener.mLoc.getLatitude(), mLocationListener.mLoc.getLongitude()))
-                .title(name)
-                .snippet(coord)
-                .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE)));
-        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(mLocationListener.mLoc.getLatitude(), mLocationListener.mLoc.getLongitude()), 16));
-
-    }*/
-
-    /**
      * Aggiungere un nuovo furto --> Nuova View di Nuovo Furto
      */
     public void aggiungereFurto(View view){
@@ -382,9 +220,7 @@ public class MainActivity extends ActionBarActivity implements TouchableWrapper.
     public void newFurto()
     {
         Furto newFurto = arrayFurti.get(arrayFurti.size() - 1);
-        //addMakerFurtoMap(newFurto);
         mMapManager.addMakerFurtoMap(newFurto);
-        //mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(newFurto.mLatitude, newFurto.mLongitude), 16));
         mMapManager.moveCameraTo(new LatLng(newFurto.mLatitude, newFurto.mLongitude), 16);
         api.addfurto(newFurto);
     }
@@ -473,49 +309,8 @@ public class MainActivity extends ActionBarActivity implements TouchableWrapper.
                 mMapManager.addMakerFurtoMap(arrayFurti.get(i));
 
         mLocationListener.update();
-
-        /*mMap.addMarker(new MarkerOptions().position(new LatLng(mLocationListener.mLoc.getLatitude(),mLocationListener.mLoc.getLongitude()))
-                .title("Posizione " )
-                .snippet("" + mLocationListener.mLoc.getLatitude()+ " " +mLocationListener.mLoc.getLongitude())
-                .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE)));
-
-        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(mLocationListener.mLoc.getLatitude(),mLocationListener.mLoc.getLongitude()), 16));*/
         mMapManager.setUpMap();
     }
-
-/*
-    public static void addMakerFurtoMap(Furto newFurto){
-        //Decide between the different makers
-        int idDrawable;
-        switch (newFurto.mTipo){
-            case "Bicicletta":
-                idDrawable = R.drawable.ic_bike;
-                break;
-            case "Cellulare":
-                idDrawable = R.drawable.ic_phone;
-                break;
-            case "Macchina":
-                idDrawable = R.drawable.ic_car;
-                break;
-            case "Portafoglio":
-                idDrawable = R.drawable.ic_wallet;
-                break;
-            case "Moto":
-                idDrawable = R.drawable.ic_bike;
-                break;
-            case "Casa":
-                idDrawable = R.drawable.ic_house;
-                break;
-            default:
-                idDrawable = R.drawable.ic_other;
-                break;
-        }
-        Marker newMarker = mMap.addMarker(new MarkerOptions().position(new LatLng(newFurto.mLatitude, newFurto.mLongitude))
-                .title(newFurto.mTipo)
-                .icon(BitmapDescriptorFactory.fromResource(idDrawable)));
-        newFurto.mIdMarker = newMarker.getId();
-        newMarker.isInfoWindowShown();
-    }*/
 
 
     public static Furto getFurto(String idMarker){

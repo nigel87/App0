@@ -7,21 +7,37 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.model.Marker;
 
 /**
  * Created by Daniel on 08/06/2015.
  */
-public class GestioneInfoWindows {
+public class GestioneInfoWindows implements GoogleMap.InfoWindowAdapter {
 
-    public static View getInfoContents(Marker marker){
+    LayoutInflater lInflater;
 
-        LayoutInflater inflater = (LayoutInflater) MainActivity.getAppContext().getSystemService(MainActivity.getAppContext().LAYOUT_INFLATER_SERVICE);
+    public GestioneInfoWindows(LayoutInflater lf) {
+        lInflater = lf;
+    }
 
-        switch (marker.getTitle()){
+    // Use default InfoWindow frame
+    @Override
+    public View getInfoWindow(Marker arg0) {
+        return null;
+    }
+
+    // Defines the contents of the InfoWindow
+    @Override
+
+    public View getInfoContents(Marker marker) {
+
+        //LayoutInflater inflater = (LayoutInflater) MainActivity.getAppContext().getSystemService(MainActivity.getAppContext().LAYOUT_INFLATER_SERVICE);
+
+        switch (marker.getTitle()) {
             case "My Position":
                 // Getting view from the layout file info_window_layout
-                View p = inflater.inflate(R.layout.info_marker_furto, null);
+                View p = lInflater.inflate(R.layout.info_marker_furto, null);
 
                 // Getting reference to the TextView to set Name
                 TextView tvPosName = (TextView) p.findViewById(R.id.tv_name);
@@ -39,7 +55,7 @@ public class GestioneInfoWindows {
 
             case "Favoriti":
                 // Getting view from the layout file info_window_layout
-                View f = inflater.inflate(R.layout.info_marker_fav, null);
+                View f = lInflater.inflate(R.layout.info_marker_fav, null);
 
                 // Getting reference to the TextView to set Name
                 TextView tvFavName = (TextView) f.findViewById(R.id.tv_name);
@@ -56,7 +72,7 @@ public class GestioneInfoWindows {
 
             case "Carabinieri":
                 // Getting view from the layout file info_window_layout
-                View c = inflater.inflate(R.layout.info_marker_carabinieri, null);
+                View c = lInflater.inflate(R.layout.info_marker_carabinieri, null);
 
                 // Getting reference to the TextView to set Name
                 TextView tvCName = (TextView) c.findViewById(R.id.tv_name);
@@ -76,7 +92,7 @@ public class GestioneInfoWindows {
 
             default:
                 // Getting view from the layout file info_window_layout
-                View v = inflater.inflate(R.layout.info_marker_furto, null);
+                View v = lInflater.inflate(R.layout.info_marker_furto, null);
 
                 // Getting reference to the TextView to set Name
                 TextView tvName = (TextView) v.findViewById(R.id.tv_name);
@@ -98,9 +114,19 @@ public class GestioneInfoWindows {
         }
     }
 
+};
 
-    public static void onWindowsClick(Marker marker){
 
+class GestioneInfoWindowsClick implements GoogleMap.OnInfoWindowClickListener {
+
+    Activity actualActivity;
+
+    public GestioneInfoWindowsClick(Activity aActivity) {
+        actualActivity = aActivity;
+    }
+
+    @Override
+    public void onInfoWindowClick(Marker marker) {
         switch(marker.getTitle()){
             case "My Position":
                 Toast.makeText(MainActivity.getAppContext(), "Posizione attuale", Toast.LENGTH_SHORT).show();
@@ -115,7 +141,7 @@ public class GestioneInfoWindows {
                         Furto furto = MainActivity.getFurto(marker.getId());
                         Intent intent = new Intent(MainActivity.getAppContext(), InfoFurtoActivity.class);
                         intent.putExtra("idFurto", furto.mId);
-                        ((Activity) MainActivity.getAppContext()).startActivityForResult(intent, MainActivity.INFO_FURTO_STATE);
+                        actualActivity.startActivityForResult(intent, MainActivity.INFO_FURTO_STATE);
                     }
                 }
                 break;

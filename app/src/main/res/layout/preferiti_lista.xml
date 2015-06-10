@@ -22,6 +22,7 @@
         android:id="@+id/relativeLayoutPreferiti">
 
         <ListView
+            android:background="@color/accent_material_dark"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:id="@+id/favlist"
