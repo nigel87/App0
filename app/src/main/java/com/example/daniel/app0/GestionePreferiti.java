@@ -49,7 +49,8 @@ public class GestionePreferiti extends ActionBarActivity {
 
         if (resultCode == ELIMINA_PREFERITO)
         {
-    aggiungiListaFavorti();
+            adapter.clear();
+            aggiungiListaFavorti();
 
         }
 
@@ -140,7 +141,7 @@ public class GestionePreferiti extends ActionBarActivity {
     public void aggiungiListaFavorti(){
 
 
-        adapter.clear();
+
         List<Preferiti> arrayFavoriti = MainActivity.getArrayPreferiti();
         if (arrayFavoriti ==null)
             setContentView(R.layout.preferiti_vuoto);
