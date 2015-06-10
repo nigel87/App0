@@ -12,24 +12,23 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.CheckBox;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
-import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
 
 /**
  * Created by nigel on 12/05/15.
+ * Gestisce la visualizzazione della lista dei prefertiti
  */
 public class GestionePreferiti extends ActionBarActivity {
     private static final int FAVORITI_STATE = 5;
-    private static Context context;
-    private static List<Preferiti> arrayFavoriti;
-    private android.support.v7.widget.Toolbar toolbar;
-    List<String> li= new ArrayList<String>();
 
+    private static final int  ELIMINA_PREFERITO = 6;
+    private static Context context;
+    List<String> li= new ArrayList<>();
+    ArrayAdapter adapter;
 
 
     //TODO: Grafica
@@ -47,6 +46,15 @@ public class GestionePreferiti extends ActionBarActivity {
             listafavoriti.setAdapter(adapter);
             listafavoriti.setOnItemClickListener(new Gestisci());
         }
+
+        if (resultCode == ELIMINA_PREFERITO)
+        {
+    aggiungiListaFavorti();
+
+        }
+
+
+
     }
 
     private void runFadeInAnimation() {
@@ -61,38 +69,7 @@ public class GestionePreferiti extends ActionBarActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
-        arrayFavoriti=MainActivity.getArrayPreferiti();
-        super.onCreate(savedInstanceState);
-        if (arrayFavoriti==null)
-            setContentView(R.layout.preferiti_vuoto);
-        else
-            setContentView(R.layout.preferiti_lista);
-
-        runFadeInAnimation();
-
-        GestionePreferiti.context = getApplicationContext();
-
-
-
-
-        ListView listafavoriti = (ListView) findViewById(R.id.favlist);
-        setupToolbar();
-
-        if (arrayFavoriti!=null)
-        {
-            for (int i = 0; i < arrayFavoriti.size(); i++)
-            {
-                final Preferiti favoriti = arrayFavoriti.get(i);
-
-                li.add(favoriti.getNome());
-            }
-            ArrayAdapter adapter = new ArrayAdapter<>(getAppContext(), R.layout.listview_item_row, li);
-            listafavoriti.setAdapter(adapter);
-            listafavoriti.setClickable(true);
-
-            listafavoriti.setOnItemClickListener(new Gestisci());
-
-        }
+    aggiungiListaFavorti();
      }
 
 
@@ -120,7 +97,7 @@ public class GestionePreferiti extends ActionBarActivity {
 
 
     public void setupToolbar(){
-        toolbar = (android.support.v7.widget.Toolbar) findViewById(R.id.toolbar);
+        android.support.v7.widget.Toolbar toolbar = (android.support.v7.widget.Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -157,6 +134,49 @@ public class GestionePreferiti extends ActionBarActivity {
             return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+
+    public void aggiungiListaFavorti(){
+
+
+        adapter.clear();
+        List<Preferiti> arrayFavoriti = MainActivity.getArrayPreferiti();
+        if (arrayFavoriti ==null)
+            setContentView(R.layout.preferiti_vuoto);
+        else
+            setContentView(R.layout.preferiti_lista);
+
+        runFadeInAnimation();
+
+        GestionePreferiti.context = getApplicationContext();
+
+
+
+
+        ListView listafavoriti = (ListView) findViewById(R.id.favlist);
+        setupToolbar();
+
+        if (arrayFavoriti !=null && arrayFavoriti.size()>0)
+        {
+            for (int i = 0; i < arrayFavoriti.size(); i++)
+            {
+                final Preferiti favoriti = arrayFavoriti.get(i);
+
+                li.add(favoriti.getNome());
+            }
+            adapter = new ArrayAdapter<>(getAppContext(), R.layout.listview_item_row, li);
+            listafavoriti.setAdapter(adapter);
+            listafavoriti.setClickable(true);
+
+            listafavoriti.setOnItemClickListener(new Gestisci());
+
+        }
+
+
+
+
+
     }
 
 

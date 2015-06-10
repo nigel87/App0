@@ -2,6 +2,7 @@ package com.example.daniel.app0;
 
 import android.os.AsyncTask;
 import android.util.Log;
+import android.widget.Toast;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
@@ -94,7 +95,6 @@ public  class ServerAPI {
     {   is_get=false;//utilizza metodo post per gestire i preferiti
         String url=FAV_BASE_URL;
         url=newfavURL(url, arrayfav);
-//        Toast.makeText(MainActivity.getAppContext(), url, Toast.LENGTH_LONG).show();
         new HttpAsyncTask(ADD_FAV).execute(url);
     }
 
