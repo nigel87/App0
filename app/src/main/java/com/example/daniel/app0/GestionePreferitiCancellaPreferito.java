@@ -36,7 +36,7 @@ public class GestionePreferitiCancellaPreferito extends ActionBarActivity {
             li.add(MainActivity.getArrayPreferiti().get(i).getNome());
 
 
-        ArrayAdapter<String> adapter= new ArrayAdapter<String>(this, android.R.layout.simple_list_item_checked, li);
+        ArrayAdapter<String> adapter= new ArrayAdapter<String>(this,R.layout.listview_item_row_delete_checkbox, li);
         lv = (ListView)findViewById(R.id.genre_list);
         lv.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
         lv.setAdapter(adapter);
