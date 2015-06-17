@@ -41,7 +41,7 @@ public class GestisciBarraSinistra implements AdapterView.OnItemClickListener {
                 Polizia polizia=MainActivity.getPolizia();
                 if (polizia!= null) {
                     //Para mostrar latitud y longitud por pantalla
-                    String name = MainActivity.getPolizia().mIndirizzo;
+                    String name = "Carabinieri";//MainActivity.getPolizia().mIndirizzo;
                     MainActivity.mMapManager.getMap().addMarker(new MarkerOptions().position(new LatLng(polizia.getmLatitude(), polizia.getmLongitude()))
                             .title(name)
                             .snippet(polizia.mPhone)
@@ -62,11 +62,7 @@ public class GestisciBarraSinistra implements AdapterView.OnItemClickListener {
                     Furto miofurto= MainActivity.getMiesegnalazioni().get(i);
                     builder.include(new LatLng(miofurto.mLatitude, miofurto.mLongitude));
 
-                            MainActivity.mMapManager.getMap().addMarker(new MarkerOptions().position(new LatLng(miofurto.mLatitude, miofurto.mLongitude))
-                                    .title(miofurto.mTitolo)
-                                    .snippet(miofurto.mDescrizione)
-                                    .icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_wallet)));
-              //      MainActivity.mMapManager.getMap().moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(miofurto.mLatitude, miofurto.mLongitude), 16));
+                    MainActivity.mMapManager.addMakerFurtoMap(miofurto);
                 }
                 LatLngBounds bounds = builder.build();
 
