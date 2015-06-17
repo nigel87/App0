@@ -16,10 +16,9 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
-import com.google.android.gms.maps.GoogleMap;
+
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
 
@@ -27,8 +26,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import android.support.v7.widget.Toolbar;
-import android.widget.TextView;
-import android.widget.Toast;
 
 
 public class MainActivity extends ActionBarActivity implements TouchableWrapper.UpdateMapAfterUserInterection {
@@ -51,11 +48,15 @@ public class MainActivity extends ActionBarActivity implements TouchableWrapper.
     private ArrayAdapter<String> navigationDrawerAdapter;
     private String[] barasinistra;
 
+    public static List <Furto> miesegnalazioni;
+
+
     private static Polizia polizia;
 
     public static Location location;
 
     ServerAPI api;
+    String deviceID;
 
 
     public static FragmentManager fragmentManager;
@@ -75,8 +76,9 @@ public class MainActivity extends ActionBarActivity implements TouchableWrapper.
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        api = new ServerAPI(Settings.Secure.getString(this.getContentResolver(),
-                Settings.Secure.ANDROID_ID));
+        deviceID=Settings.Secure.getString(this.getContentResolver(),
+                Settings.Secure.ANDROID_ID);
+        api = new ServerAPI(deviceID);
         staticapi=api;
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
@@ -115,7 +117,14 @@ public class MainActivity extends ActionBarActivity implements TouchableWrapper.
 
 
 
+
+
+
+
     }
+
+    public static List <Furto> getMiesegnalazioni()
+    {return miesegnalazioni;}
 
     private void nitView()
     {

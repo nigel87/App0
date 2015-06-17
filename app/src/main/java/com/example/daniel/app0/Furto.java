@@ -42,6 +42,9 @@ public class Furto {
         mCommenti = new ArrayList<String>();
     }
 
+    public String getDeviceId()
+        {return mDeviceId;}
+
 
     public void indirizzoACoordinate (){
         Geocoder geocoder = new Geocoder(MainActivity.getAppContext(), Locale.getDefault());

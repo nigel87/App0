@@ -4,6 +4,8 @@ import android.os.AsyncTask;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.google.android.gms.maps.model.LatLngBounds;
+
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
@@ -53,7 +55,6 @@ public  class ServerAPI {
     private final int POLICE=6;
 
     private boolean is_furti_caricatti = false;
-
 
 
 
@@ -272,9 +273,20 @@ public  class ServerAPI {
 
                     //     getCommenti(Integer.parseInt(id));
                     MainActivity.addFurto(newFurto);
-
-
                 }
+
+                MainActivity.miesegnalazioni = new ArrayList<>();
+
+                for (int i=0;i<MainActivity.arrayFurti.size();i++)
+                {
+
+                    if (MainActivity.arrayFurti.get(i).getDeviceId().equals(deviceid))
+                    {
+                        MainActivity.miesegnalazioni.add(MainActivity.arrayFurti.get(i));
+
+                    }
+                }
+
                 break;
 
             case POLICE:

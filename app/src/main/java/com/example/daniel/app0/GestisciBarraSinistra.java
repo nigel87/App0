@@ -4,9 +4,12 @@ import android.content.Intent;
 import android.support.v4.widget.DrawerLayout;
 import android.view.View;
 import android.widget.AdapterView;
+
+import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.android.gms.maps.model.MarkerOptions;
 
 /**
@@ -51,6 +54,28 @@ public class GestisciBarraSinistra implements AdapterView.OnItemClickListener {
             case 3: //Notifiche
                 break;
             case 4: //Mie segnalazioni
+                MainActivity.mMapManager.getMap().clear();
+                LatLngBounds.Builder builder = new LatLngBounds.Builder();
+
+                for (int i=0;i<MainActivity.getMiesegnalazioni().size();i++)
+                {
+                    Furto miofurto= MainActivity.getMiesegnalazioni().get(i);
+                    builder.include(new LatLng(miofurto.mLatitude, miofurto.mLongitude));
+
+                            MainActivity.mMapManager.getMap().addMarker(new MarkerOptions().position(new LatLng(miofurto.mLatitude, miofurto.mLongitude))
+                                    .title(miofurto.mTitolo)
+                                    .snippet(miofurto.mDescrizione)
+                                    .icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_wallet)));
+              //      MainActivity.mMapManager.getMap().moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(miofurto.mLatitude, miofurto.mLongitude), 16));
+                }
+                LatLngBounds bounds = builder.build();
+
+                int padding = 100; // offset from edges of the map in pixels
+                CameraUpdate cu = CameraUpdateFactory.newLatLngBounds(bounds, padding);
+                MainActivity.mMapManager.getMap().moveCamera(cu);
+
+                drawerLayout.closeDrawers();
+
                 break;
             case 5: //Informazioni
                 Intent intent = new Intent(MainActivity.getAppContext(), Informazioni.class);
