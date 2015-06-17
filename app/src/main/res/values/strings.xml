@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">App0</string>
+    <string name="app_name">Furti</string>
     <string name="title_activity_main">Furti</string>
     <string name="title_activity_aggiungere_furto">Aggiungere Furto</string>
     <string name="title_activity_map_cercare_posto">Cercare Posto</string>
