@@ -9,7 +9,6 @@
     <LinearLayout
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
         android:orientation="vertical"
         android:id="@+id/linearLayout">
 
@@ -28,7 +27,7 @@
             android:layout_marginLeft="15dp"
             android:layout_marginTop="20dp"
             android:text="@string/titolo_furto"
-            android:textSize="25dp" />
+            android:textSize="25sp" />
         <EditText
             android:layout_width="175dp"
             android:layout_height="wrap_content"
@@ -49,7 +48,7 @@
             android:layout_marginLeft="15dp"
             android:layout_marginTop="20dp"
             android:text="@string/tipo_furto"
-            android:textSize="25dp" />
+            android:textSize="25sp" />
         <Spinner
             android:layout_alignParentRight="true"
             android:layout_width="175dp"
@@ -97,17 +96,11 @@
             android:layout_centerVertical="true"
             android:layout_alignParentRight="true"
 
-            android:layout_alignParentEnd="true" />
+            android:layout_alignParentEnd="true"
+            android:background="#ff000000" />
 
     </RelativeLayout>
     <!-- Bottone per andare alla mapa -->
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_alignParentRight="true"
-
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_gravity="end"></LinearLayout>
 
     <!-- Date -->
     <RelativeLayout
@@ -120,8 +113,7 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="15dp"
             android:text="@string/date"
-            android:textSize="25dp"
-            android:layout_weight="1"
+            android:textSize="25sp"
             android:id="@+id/textView2" />
         <Button
             android:layout_width="175dp"
@@ -149,8 +141,7 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="15dp"
             android:text="@string/ora"
-            android:textSize="25dp"
-            android:layout_weight="1"
+            android:textSize="25sp"
             android:id="@+id/textView" />
         <Spinner
             android:layout_alignParentRight="true"
@@ -172,7 +163,7 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="15dp"
             android:text="@string/descrizione"
-            android:textSize="25dp"/>
+            android:textSize="25sp"/>
         <EditText
             android:paddingTop="0px"
             android:gravity="top"
@@ -181,7 +172,8 @@
             android:layout_marginLeft="15dp"
             android:layout_marginRight="15dp"
             android:id="@+id/descrizione_nuevo_furto"
-            android:hint="@string/descrizione_hint"/>
+            android:hint="@string/descrizione_hint"
+            android:background="#ffffffff" />
     </LinearLayout>
 
     <!-- Confermare -->
@@ -192,35 +184,30 @@
         />
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="50dp"
         android:orientation="horizontal"
         android:weightSum="1">
         <Button
-            android:layout_width="160dp"
+            android:layout_width="130dp"
             android:layout_height="70dp"
             android:layout_marginLeft="20dp"
             android:drawableBottom="@drawable/ic_action_accept"
-            android:text="Accettare"
-            android:textSize="10dp"
+            android:textSize="10sp"
             android:scaleY=".8"
             android:onClick="salvareFurto"
-            android:layout_weight="0.30"
-            android:layout_alignParentTop="true"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true" />
+            android:background="@color/colorAccent"
+            android:layout_alignParentTop="true" />
         <Button
-            android:layout_width="160dp"
+            android:layout_width="130dp"
             android:layout_height="70dp"
             android:layout_marginRight="20dp"
             android:drawableBottom="@drawable/ic_action_cancel"
-            android:text="Cancelare"
-            android:textSize="10dp"
+            android:textSize="10sp"
             android:scaleY=".8"
             android:onClick="cancelare"
-            android:layout_weight="0.30"
             android:layout_alignParentTop="true"
             android:layout_alignParentEnd="true"
             android:layout_alignParentRight="true"
-            />
+            android:background="@color/colorAccent" />
     </RelativeLayout>
 </LinearLayout>

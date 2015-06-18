@@ -14,16 +14,16 @@
     <string name="tipo_furto">Tipo di furto</string>
     <string name="indirizzo">Indirizzo</string>
     <string name="indirizzo_hint">via , numero, città</string>
-    <string name="date">Date</string>
+    <string name="date">Data</string>
     <string name="date_hint">dd/mm/aaaa</string>
     <string name="ora">Ora</string>
     <string name="view_commenti">Commenti</string>
     <string name="commento">Commento</string>
-    <string name="commento_hint">Aggiunge un commento si volete</string>
+    <string name="commento_hint">Aggiungere un commento se volete</string>
     <string name="descrizione">Descrizione</string>
-    <string name="descrizione_hint">Aggiunge una descrizione dil furto</string>
-    <string name="drawer_open">Open</string>
-    <string name="drawer_close">Close</string>
+    <string name="descrizione_hint">Scrivere una descrizione del furto</string>
+    <string name="drawer_open">Apri</string>
+    <string name="drawer_close">Chiudi</string>
     <string name="NessunPreferitoTitolo">Nessun preferito trovato</string>
     <string name="NessunPreferitoSototitolo">Inserendo un preferito si possono ricevere notifiche rigardo ai furti segnalati in zona</string>
     <string name="BottoneAggiungiFav">Aggiungi un nuovo preferito</string>
@@ -33,6 +33,8 @@
       \n\n  Questa applicazione offre la possibilita di segnlare i furti subbiti, e vissualizzare i furti segnalati da gli altri uttenti
     \n\n Aggiungendo una zona ai preferiti, ogni volta che vicino a quella zona viene segnalato un furto si riceverera una notifica</string>
     <string name="logo_sapienzza">Logo universita la Sapienza</string>
+    <string name="bottone_accetta">Accetta</string>
+    <string name="bottone_cancella">Cancella</string>
 
 
 </resources>
