@@ -275,7 +275,7 @@ public  class ServerAPI {
                     MainActivity.addFurto(newFurto);
                 }
 
-                MainActivity.miesegnalazioni = new ArrayList<>();
+
 
                 for (int i=0;i<MainActivity.arrayFurti.size();i++)
                 {
@@ -367,7 +367,7 @@ public  class ServerAPI {
         nameValuePairs.add(new BasicNameValuePair("lat", String.valueOf(f.mLatitude)));
         nameValuePairs.add(new BasicNameValuePair("lon",  String.valueOf(f.mLongitude)));
         nameValuePairs.add(new BasicNameValuePair("categoria", f.mTipo));
-        nameValuePairs.add(new BasicNameValuePair("titolo", "Titolo furto"));
+        nameValuePairs.add(new BasicNameValuePair("titolo", f.mTitolo));
         nameValuePairs.add(new BasicNameValuePair("data", f.mDate));
         nameValuePairs.add(new BasicNameValuePair("fascia", f.mOra));
         nameValuePairs.add(new BasicNameValuePair("description", f.mDescrizione));

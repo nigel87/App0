@@ -84,10 +84,10 @@
             android:layout_toLeftOf="@+id/imageButton"
             android:layout_toStartOf="@+id/imageButton" />
 
+        <!-- Bottone per andare alla mapa -->
         <ImageButton
             android:layout_width="30dp"
             android:layout_height="30dp"
-            android:drawable="@drawable/ic_action_map"
             android:layout_marginRight="5dp"
             android:scaleX=".5"
             android:scaleY=".5"
@@ -100,14 +100,7 @@
             android:layout_alignParentEnd="true" />
 
     </RelativeLayout>
-    <!-- Bottone per andare alla mapa -->
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_alignParentRight="true"
 
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_gravity="end"></LinearLayout>
 
     <!-- Date -->
     <RelativeLayout

@@ -80,19 +80,29 @@ public class AggiungereFurto extends ActionBarActivity {
      */
     public void salvareFurto(View view){
 
-        EditText titolo = (EditText) findViewById(R.id.titolo_nuevo_furto);
-        Spinner tipo = (Spinner) findViewById(R.id.spinner_tipo_nuovo_furto);
-        EditText newIndir = (EditText) findViewById(R.id.indirizzo_nuovo_furto);
-        Spinner ora = (Spinner) findViewById(R.id.spinner_ora_nuovo_furto);
-        EditText newDescrizione = (EditText) findViewById(R.id.descrizione_nuevo_furto);
-        if(newIndir.getText().toString().matches("") /*&& newDate.getText().toString().matches("")*/)
+        EditText et_Titolo = (EditText) findViewById(R.id.titolo_nuevo_furto);
+        Spinner et_Tipo = (Spinner) findViewById(R.id.spinner_tipo_nuovo_furto);
+        EditText et_NewIndir = (EditText) findViewById(R.id.indirizzo_nuovo_furto);
+        Spinner et_Ora = (Spinner) findViewById(R.id.spinner_ora_nuovo_furto);
+        EditText et_NewDescrizione = (EditText) findViewById(R.id.descrizione_nuevo_furto);
+        SimpleDateFormat dateFormat = new SimpleDateFormat(DATE_FORMAT);
+
+        String titolo = et_Titolo.getText().toString();
+        String tipo = et_Tipo.getSelectedItem().toString();
+        String newIndir = et_NewIndir.getText().toString();
+        String ora = et_Ora.getSelectedItem().toString();
+        String newDescrizione = et_NewDescrizione.getText().toString();
+        String data = dateFormat.format(mCalendar.getTime());
+
+        //if(newIndir.getText().toString().matches("") /*&& newDate.getText().toString().matches("")*/)
+        if(newIndir.matches(""))
             Toast.makeText(this, "Indirizzo e Date sono obligatori", Toast.LENGTH_SHORT).show();
         else {
 
-            SimpleDateFormat dateFormat = new SimpleDateFormat(DATE_FORMAT);
-            int id = MainActivity.arrayFurti.size();
+
+            int id = -1;
             //Furto(int newId, String newTitolo, String newTipo, String newIndirizzo, String newDate, String newOra, String newDescizione, String newDeviceId)
-            newFurto = new Furto(
+            /*newFurto = new Furto(
                     id,
                     titolo.getText().toString(),
                     tipo.getSelectedItem().toString(),
@@ -100,6 +110,15 @@ public class AggiungereFurto extends ActionBarActivity {
                     dateFormat.format(mCalendar.getTime()),
                     ora.getSelectedItem().toString(),
                     newDescrizione.getText().toString(),
+                    MainActivity.staticapi.deviceid);*/
+             newFurto = new Furto(
+                    id,
+                    titolo,
+                    tipo,
+                    newIndir,
+                    data,
+                    ora,
+                    newDescrizione,
                     MainActivity.staticapi.deviceid);
 
 

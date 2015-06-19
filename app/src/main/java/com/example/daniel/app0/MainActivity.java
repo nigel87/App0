@@ -85,6 +85,7 @@ public class MainActivity extends ActionBarActivity implements TouchableWrapper.
         MainActivity.context = getApplicationContext();
         fragmentManager = getSupportFragmentManager();
         mMapManager = new GestioneMappa();
+        miesegnalazioni = new ArrayList<>();
 
         mLocationListener = new MyLocationListener();
         //setUpMapIfNeeded();
@@ -238,19 +239,22 @@ public class MainActivity extends ActionBarActivity implements TouchableWrapper.
         if (arrayFurti == null)
             arrayFurti = new ArrayList<>();
 
-        boolean is_new_furto=true;
+        boolean exist_this_furto = false;
 
         /*Contorlla gli elementi gia presenti in database in modo da non inserire lo stesso furto due volte nel array*/
         for (int i=0;i<arrayFurti.size();i++)
-            if(mFurto.mId==arrayFurti.get(i).mId)
-                is_new_furto=false;
+            if(mFurto.mId==arrayFurti.get(i).mId && mFurto.mTitolo.matches(arrayFurti.get(i).mTitolo))
+                exist_this_furto=false;
 
 
 
-        if(is_new_furto) {
-            staticapi.getCommenti(mFurto.mId);
+        if(!exist_this_furto) {
             arrayFurti.add(mFurto);
+            MainActivity.miesegnalazioni.add(mFurto);
         }
+
+        if(mFurto.mId!=-1)
+            staticapi.getCommenti(mFurto.mId);
     }
 
     public static  List<Preferiti> getArrayPreferiti ()
@@ -355,7 +359,7 @@ public class MainActivity extends ActionBarActivity implements TouchableWrapper.
         new_location.setLongitude(latLng.longitude);
 
 
-        if (location.distanceTo(new_location)>5000 ) {
+        if (location.distanceTo(new_location)>1000 ) {
             location=new_location;
             api.furti(latLng.latitude, latLng.longitude);
             restartMap();
