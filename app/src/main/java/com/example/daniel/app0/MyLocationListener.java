@@ -9,6 +9,8 @@ import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
 
+import java.util.List;
+
 /**
  * Created by Daniel on 21/05/2015.
  */
@@ -34,8 +36,24 @@ public class MyLocationListener implements LocationListener {
 
     public void update(){
         mLocationManager.requestLocationUpdates(mProvider, TIEMPO_MIN, DISTANCIA_MIN, this);
-        mLoc = mLocationManager.getLastKnownLocation(mProvider);
+        mLoc = getLastKnownLocation();
 
+    }
+
+    private Location getLastKnownLocation() {
+        List<String> providers = mLocationManager.getProviders(true);
+        Location bestLocation = null;
+        for (String provider : providers) {
+            Location l = mLocationManager.getLastKnownLocation(provider);
+            if (l == null) {
+                continue;
+            }
+            if (bestLocation == null || l.getAccuracy() < bestLocation.getAccuracy()) {
+                // Found best last known location: %s", l);
+                bestLocation = l;
+            }
+        }
+        return bestLocation;
     }
 
     private void setProvider(){

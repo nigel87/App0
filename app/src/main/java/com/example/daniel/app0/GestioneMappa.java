@@ -48,6 +48,9 @@ public class GestioneMappa {
 
 
    public void setUpMap() {
+       while(MainActivity.mLocationListener.mLoc == null)
+           MainActivity.mLocationListener.update();
+
        MainActivity.location=MainActivity.mLocationListener.mLoc;
 
         //Para mostrar latitud y longitud por pantalla
