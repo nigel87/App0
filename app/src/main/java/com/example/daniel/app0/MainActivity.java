@@ -33,6 +33,7 @@ public class MainActivity extends ActionBarActivity implements TouchableWrapper.
     private static final int REQUEST_STATE = 0;
     private static final int FAVORITI_STATE = 5;
     public static final int INFO_FURTO_STATE = 2;
+    public static final int DIST_MIN_RECALL_API = 5000;
 
 
     public static MyLocationListener mLocationListener;
@@ -359,7 +360,7 @@ public class MainActivity extends ActionBarActivity implements TouchableWrapper.
         new_location.setLongitude(latLng.longitude);
 
 
-        if (location.distanceTo(new_location)>1000 ) {
+        if (location.distanceTo(new_location)>DIST_MIN_RECALL_API ) {
             location=new_location;
             api.furti(latLng.latitude, latLng.longitude);
             restartMap();

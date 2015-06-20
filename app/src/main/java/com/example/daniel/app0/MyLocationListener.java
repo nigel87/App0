@@ -29,8 +29,14 @@ public class MyLocationListener implements LocationListener {
         mLocationManager = (LocationManager)MainActivity.getAppContext().getSystemService(Context.LOCATION_SERVICE);
         setProvider();
 
-        mLocationManager.requestLocationUpdates(mProvider, TIEMPO_MIN, DISTANCIA_MIN, this);
-        mLoc = mLocationManager.getLastKnownLocation("network");
+        if(mLocationManager == null){
+            Intent intent = new Intent( android.provider.Settings.ACTION_LOCATION_SOURCE_SETTINGS);
+            MainActivity.getAppContext().startActivity(intent);
+        }
+        if(mLocationManager != null) {
+           // mLocationManager.requestLocationUpdates(mProvider, TIEMPO_MIN, DISTANCIA_MIN, this);
+            mLoc = getLastKnownLocation();
+        }
         
     };
 
@@ -66,7 +72,7 @@ public class MyLocationListener implements LocationListener {
     
     // Metodi di interfaccia LocationListener
     public void onLocationChanged(Location location) {
-        mLoc = mLocationManager.getLastKnownLocation(mProvider);
+        mLoc = getLastKnownLocation();
     }
 
     public void onProviderDisabled(String mProvider) {
