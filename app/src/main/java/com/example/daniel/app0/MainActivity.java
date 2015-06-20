@@ -86,12 +86,13 @@ public class MainActivity extends ActionBarActivity implements TouchableWrapper.
         setContentView(R.layout.activity_main);
         MainActivity.context = getApplicationContext();
         fragmentManager = getSupportFragmentManager();
+
+
         mMapManager = new GestioneMappa();
         miesegnalazioni = new ArrayList<>();
 
         mLocationListener = new MyLocationListener();
         //setUpMapIfNeeded();
-        mMapManager.setUpMap();
 
         nitView();
         if (toolbar != null) {
@@ -111,8 +112,6 @@ public class MainActivity extends ActionBarActivity implements TouchableWrapper.
             api.furti(mLocationListener.mLoc.getLatitude(), mLocationListener.mLoc.getLongitude(),START);
             start = START;
         }
-
-
         /*
         *
         * Gestisce il click ai bottoni della barra sinistra
@@ -125,8 +124,7 @@ public class MainActivity extends ActionBarActivity implements TouchableWrapper.
         mMapManager.getMap().setInfoWindowAdapter(new GestioneInfoWindows(getLayoutInflater()));
         mMapManager.getMap().setOnInfoWindowClickListener(new GestioneInfoWindowsClick(this));
 
-
-
+        mMapManager.setUpMap();
 
 
 
@@ -253,7 +251,7 @@ public class MainActivity extends ActionBarActivity implements TouchableWrapper.
         /*Contorlla gli elementi gia presenti in database in modo da non inserire lo stesso furto due volte nel array*/
         for (int i=0;i<arrayFurti.size();i++)
             if(mFurto.mId==arrayFurti.get(i).mId && mFurto.mTitolo.matches(arrayFurti.get(i).mTitolo))
-                exist_this_furto=false;
+                exist_this_furto=true;
 
 
 
