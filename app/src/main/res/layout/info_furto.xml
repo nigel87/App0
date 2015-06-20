@@ -35,7 +35,8 @@
                     android:layout_marginStart="15dp"
                     android:layout_marginTop="20dp"
                     android:text="@string/titolo_furto"
-                    android:textSize="25sp" />
+                    android:textSize="25sp"
+                    android:textColor="#ff000000" />
                 <TextView
                     android:layout_alignParentEnd="true"
                     android:layout_width="175dp"
@@ -57,7 +58,8 @@
                     android:layout_marginStart="15dp"
                     android:layout_marginTop="20dp"
                     android:text="@string/tipo_furto"
-                    android:textSize="25sp" />
+                    android:textSize="25sp"
+                    android:textColor="#ff000000" />
                 <TextView
                     android:layout_alignParentEnd="true"
                     android:layout_width="175dp"
@@ -81,7 +83,8 @@
                     android:layout_marginStart="15dp"
                     android:layout_marginTop="20dp"
                     android:text="@string/indirizzo"
-                    android:textSize="25sp"/>
+                    android:textSize="25sp"
+                    android:textColor="#ff000000" />
                 <TextView
                     android:layout_alignParentEnd="true"
                     android:layout_width="175dp"
@@ -105,7 +108,8 @@
                     android:layout_marginLeft="15dp"
                     android:layout_marginTop="20dp"
                     android:text="@string/date"
-                    android:textSize="25sp"/>
+                    android:textSize="25sp"
+                    android:textColor="#ff000000" />
                 <TextView
                     android:layout_alignParentRight="true"
                     android:layout_width="175dp"
@@ -131,7 +135,8 @@
                     android:layout_marginStart="15dp"
                     android:layout_marginTop="20dp"
                     android:text="@string/ora"
-                    android:textSize="25sp" />
+                    android:textSize="25sp"
+                    android:textColor="#ff000000" />
                 <TextView
                     android:layout_alignParentEnd="true"
                     android:layout_width="175dp"
@@ -153,7 +158,8 @@
                     android:layout_marginStart="15dp"
                     android:layout_marginTop="20dp"
                     android:text="@string/descrizione"
-                    android:textSize="25sp"/>
+                    android:textSize="25sp"
+                    android:textColor="#ff000000" />
                 <TextView
                     android:layout_alignParentEnd="true"
                     android:layout_width="175dp"
@@ -179,11 +185,13 @@
                     android:layout_marginStart="15dp"
                     android:layout_marginTop="20dp"
                     android:text="@string/view_commenti"
-                    android:textSize="25sp"/>
+                    android:textSize="25sp"
+                    android:textColor="#ff000000" />
 
                 <ScrollView
                     android:layout_width="fill_parent"
-                    android:layout_height="wrap_content">
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="top">
                     <TextView
                         android:layout_width="fill_parent"
                         android:layout_height="wrap_content"
@@ -206,7 +214,8 @@
                     android:layout_marginStart="15dp"
                     android:layout_marginTop="20dp"
                     android:text="@string/commento"
-                    android:textSize="25sp"/>
+                    android:textSize="25sp"
+                    android:textColor="#ff000000" />
                 <EditText
                     android:paddingTop="0px"
                     android:gravity="top"

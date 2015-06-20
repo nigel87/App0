@@ -420,7 +420,7 @@ public  class ServerAPI {
         String paramString = URLEncodedUtils.format(nameValuePairs, "utf-8");
         url += paramString;
 
-        Toast.makeText(MainActivity.getAppContext(), url, Toast.LENGTH_LONG).show();
+        //Toast.makeText(MainActivity.getAppContext(), url, Toast.LENGTH_LONG).show();
 
         return url;
     }

@@ -96,8 +96,7 @@
             android:layout_centerVertical="true"
             android:layout_alignParentRight="true"
 
-            android:layout_alignParentEnd="true"
-            android:background="#ff000000" />
+            android:layout_alignParentEnd="true" />
 
     </RelativeLayout>
     <!-- Bottone per andare alla mapa -->

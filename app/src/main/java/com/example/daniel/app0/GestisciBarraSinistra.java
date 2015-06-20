@@ -73,7 +73,12 @@ public class GestisciBarraSinistra implements AdapterView.OnItemClickListener {
                 drawerLayout.closeDrawers();
 
                 break;
-            case 5: //Informazioni
+            case 5: //Ricarica
+                int START = MainActivity.start+10;
+                MainActivity.staticapi.furti(MainActivity.mLocationListener.mLoc.getLatitude(), MainActivity.mLocationListener.mLoc.getLongitude(), START);
+                MainActivity.start = START;
+                break;
+            case 6: //Informazioni
                 Intent intent = new Intent(MainActivity.getAppContext(), Informazioni.class);
                 intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 MainActivity.getAppContext().startActivity(intent);

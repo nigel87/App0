@@ -34,6 +34,7 @@ public class MainActivity extends ActionBarActivity implements TouchableWrapper.
     private static final int FAVORITI_STATE = 5;
     public static final int INFO_FURTO_STATE = 2;
     public static final int DIST_MIN_RECALL_API = 5000;
+    public static int start = 0;
 
 
     public static MyLocationListener mLocationListener;
@@ -101,12 +102,16 @@ public class MainActivity extends ActionBarActivity implements TouchableWrapper.
         }
         initDrawer();
         final GestioneNotifiche mNotifiche = new GestioneNotifiche();
-        api.furti(mLocationListener.mLoc.getLatitude(), mLocationListener.mLoc.getLongitude());
+        //api.furti(mLocationListener.mLoc.getLatitude(), mLocationListener.mLoc.getLongitude());
         api.fav();
         api.police(mLocationListener.mLoc.getLatitude(), mLocationListener.mLoc.getLongitude());
 
-        int START=10;
-        api.furti(mLocationListener.mLoc.getLatitude(), mLocationListener.mLoc.getLongitude(),START);
+        for(int i = 0; i<4; i++){
+            int START = 10*i;
+            api.furti(mLocationListener.mLoc.getLatitude(), mLocationListener.mLoc.getLongitude(),START);
+            start = START;
+        }
+
 
         /*
         *
