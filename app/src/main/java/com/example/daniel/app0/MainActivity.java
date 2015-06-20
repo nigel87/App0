@@ -105,6 +105,9 @@ public class MainActivity extends ActionBarActivity implements TouchableWrapper.
         api.fav();
         api.police(mLocationListener.mLoc.getLatitude(), mLocationListener.mLoc.getLongitude());
 
+        int START=10;
+        api.furti(mLocationListener.mLoc.getLatitude(), mLocationListener.mLoc.getLongitude(),START);
+
         /*
         *
         * Gestisce il click ai bottoni della barra sinistra

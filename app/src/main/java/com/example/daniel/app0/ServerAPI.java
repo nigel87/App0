@@ -83,6 +83,17 @@ public  class ServerAPI {
         new HttpAsyncTask(FURTI).execute(url);
     }
 
+    public  void furti(double lat, double lon, int start)
+    {
+        initLat=lat;
+        initLon=lon;
+
+        is_get=true;//utilizza metodo get per ottenere la lista dei furti
+        String url=FURTI_BASE_URL;
+        url=furtiURL(url,start);
+        new HttpAsyncTask(FURTI).execute(url);
+    }
+
     public void addfurto(Furto newFurto)
     {
         is_get=false;//utilizza metodo post per inserire un nuovo furto
@@ -392,6 +403,24 @@ public  class ServerAPI {
 
         String paramString = URLEncodedUtils.format(nameValuePairs, "utf-8");
         url += paramString;
+
+        return url;
+    }
+
+    /*Restituisce una lista di 10 furti
+* parametri in GET deviceid model version lat lon [categoria] [idfurto] [start]**/
+    private String furtiURL(String url, int start){
+        url=furtiURL(url);
+        if(!url.endsWith("&"))
+        url += "&";
+
+        List<BasicNameValuePair> nameValuePairs = new ArrayList<>(1);
+        nameValuePairs.add(new BasicNameValuePair("start", String.valueOf(start)));
+
+        String paramString = URLEncodedUtils.format(nameValuePairs, "utf-8");
+        url += paramString;
+
+        Toast.makeText(MainActivity.getAppContext(), url, Toast.LENGTH_LONG).show();
 
         return url;
     }
