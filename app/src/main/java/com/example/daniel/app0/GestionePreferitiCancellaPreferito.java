@@ -68,11 +68,17 @@ public class GestionePreferitiCancellaPreferito extends ActionBarActivity {
     {
         SparseBooleanArray positions = lv.getCheckedItemPositions();
         int size= positions.size();
+        List newArrayPreferiti = new ArrayList();
         for(int index = 0; index < size; index++)
         {
-            MainActivity.getArrayPreferiti().remove(positions.keyAt(index));
-            Toast.makeText(this, "Cancella preferito "+ li.get(positions.keyAt(index)), Toast.LENGTH_SHORT).show();
+            newArrayPreferiti.add(MainActivity.getArrayPreferiti().get(positions.keyAt(index)));
         }
+        String textCancellato = "Cancella preferito ";
+        for(int i = 0; i < newArrayPreferiti.size(); i++){
+            MainActivity.getArrayPreferiti().remove(newArrayPreferiti.get(i));
+            textCancellato = textCancellato + ((Preferiti)(newArrayPreferiti.get(i))).getNome() + " ";
+        }
+        Toast.makeText(this, textCancellato, Toast.LENGTH_SHORT).show();
         MainActivity.staticapi.fav(MainActivity.getArrayPreferiti());
         Intent intent = new Intent(this,GestionePreferiti.class);
         setResult(ELIMINA_PREFERITO, intent);

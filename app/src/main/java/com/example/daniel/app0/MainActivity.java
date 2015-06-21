@@ -189,8 +189,8 @@ public class MainActivity extends ActionBarActivity implements TouchableWrapper.
     protected void onResume()
     {
         super.onResume();
-        start = start+10;
-        api.furti(mLocationListener.mLoc.getLatitude(), mLocationListener.mLoc.getLongitude(),start);
+        //start = start+10;
+        //api.furti(mLocationListener.mLoc.getLatitude(), mLocationListener.mLoc.getLongitude(),start);
         mLocationListener.update();
         mMapManager.setUpMapIfNeeded();
         restartMap();

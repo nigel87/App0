@@ -42,9 +42,9 @@
         android:onClick="nuovoFavorito"
         android:textColor="@color/accent_material_light"
         android:gravity="center_horizontal"
+        android:layout_marginBottom="77dp"
         android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="80dp" />
+        android:layout_centerHorizontal="true" />
 
 
 </RelativeLayout>

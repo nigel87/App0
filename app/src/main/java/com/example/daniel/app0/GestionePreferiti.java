@@ -52,6 +52,9 @@ public class GestionePreferiti extends ActionBarActivity {
         if (resultCode == ELIMINA_PREFERITO)
         {
             adapter.clear();
+            if(MainActivity.getArrayPreferiti().size() == 0)
+                setContentView(R.layout.preferiti_vuoto);
+
             aggiungiListaFavorti();
 
         }
@@ -100,7 +103,7 @@ public class GestionePreferiti extends ActionBarActivity {
             GestionePreferiti.this.startActivityForResult(intent, FAVORITI_STATE);
         }
         else{
-            Toast.makeText(this, R.string.max_preferiti, Toast.LENGTH_SHORT);
+            Toast.makeText(this, R.string.max_preferiti, Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -122,7 +125,9 @@ public class GestionePreferiti extends ActionBarActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_preferiti, menu);
+        if(MainActivity.getArrayPreferiti() != null)
+            if(MainActivity.getArrayPreferiti().size() != 0)
+                getMenuInflater().inflate(R.menu.menu_preferiti, menu);
         return true;
     }
 
