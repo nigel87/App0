@@ -44,7 +44,7 @@ public class MainActivity extends ActionBarActivity implements TouchableWrapper.
     private static Context context;
 
 
-    private static Toolbar toolbar;
+    public static Toolbar toolbar;
     private DrawerLayout drawerLayout;
     private ActionBarDrawerToggle drawerToggle;
     private ListView leftDrawerList;

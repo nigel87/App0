@@ -31,6 +31,10 @@ public class GestisciBarraSinistra implements AdapterView.OnItemClickListener {
             case 0://home
                 MainActivity.mMapManager.getMap().clear();
                 MainActivity.restartMap2();
+                if (MainActivity.toolbar != null) {
+                    MainActivity.toolbar.setTitle("Furti");
+                }
+
               drawerLayout.closeDrawers();
                 break;
             case 1://Tipo di furto
@@ -39,6 +43,9 @@ public class GestisciBarraSinistra implements AdapterView.OnItemClickListener {
             case 2: //Carabinieri
                 MainActivity.mMapManager.getMap().clear();
                 Polizia polizia=MainActivity.getPolizia();
+                if (MainActivity.toolbar != null) {
+                    MainActivity.toolbar.setTitle("Carabinieri");
+                }
                 if (polizia!= null) {
                     //Para mostrar latitud y longitud por pantalla
                     String name = "Carabinieri";//MainActivity.getPolizia().mIndirizzo;
@@ -71,6 +78,9 @@ public class GestisciBarraSinistra implements AdapterView.OnItemClickListener {
                 CameraUpdate cu = CameraUpdateFactory.newLatLngBounds(bounds, padding);
                 MainActivity.mMapManager.getMap().moveCamera(cu);
 
+                if (MainActivity.toolbar != null) {
+                    MainActivity.toolbar.setTitle("Mie segnalazioni");
+                }
                 drawerLayout.closeDrawers();
 
                 break;
