@@ -36,6 +36,7 @@
     <string name="bottone_accetta">Accetta</string>
     <string name="bottone_cancella">Cancella</string>
     <string name="caricando_dati">Caricando i dati di tutti furti nella zona.\nÈ possibile esplorare la mappa.</string>
+    <string name="max_preferiti">Hai già il massimo di preferiti</string>
 
 
 </resources>

@@ -14,6 +14,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -93,8 +94,13 @@ public class GestionePreferiti extends ActionBarActivity {
     // Aggiungere un nuovo favorito
     public void nuovoFavorito(View v)
     {
-        Intent intent = new Intent(GestionePreferiti.this, NuovoPreferito.class);
-        GestionePreferiti.this.startActivityForResult(intent, FAVORITI_STATE);
+        if(li.size() < 3) {
+            Intent intent = new Intent(GestionePreferiti.this, NuovoPreferito.class);
+            GestionePreferiti.this.startActivityForResult(intent, FAVORITI_STATE);
+        }
+        else{
+            Toast.makeText(this, R.string.max_preferiti, Toast.LENGTH_SHORT);
+        }
     }
 
 
