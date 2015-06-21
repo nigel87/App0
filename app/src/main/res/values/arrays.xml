@@ -10,10 +10,10 @@
         <item>other</item>
     </string-array>
     <string-array name="ora_furto_array">
-        <item>morning</item>
-        <item>afternoon</item>
-        <item>evening</item>
-        <item>night</item>
+        <item>mattina</item>
+        <item>pomeriggio</item>
+        <item>sera</item>
+        <item>notte</item>
     </string-array>
     <string-array name="bara_sinistra">
         <item>Home</item>

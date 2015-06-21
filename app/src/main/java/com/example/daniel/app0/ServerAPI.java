@@ -90,7 +90,7 @@ public  class ServerAPI {
 
         is_get=true;//utilizza metodo get per ottenere la lista dei furti
         String url=FURTI_BASE_URL;
-        url=furtiURL(url,start);
+        url=furtiURL(url, start);
         new HttpAsyncTask(FURTI).execute(url);
     }
 
@@ -280,7 +280,7 @@ public  class ServerAPI {
 
 
                     //Furto(int newId, String newTitolo, String newTipo, String newIndirizzo, String newDate, String newOra, String newDescizione, String newDeviceId)
-                    Furto newFurto = new Furto(Integer.parseInt(id), titolo, tipo, Furto.coordinateAIndirizzo(Double.parseDouble(slat), Double.parseDouble(slon)),date,ora,descrizione, device);
+                    Furto newFurto = new Furto(Integer.parseInt(id), titolo, tipo, Furto.coordinateAIndirizzo(Double.parseDouble(slat), Double.parseDouble(slon)),date,translateTimePhaseEnglishItalian(ora),descrizione, device);
 
                     //     getCommenti(Integer.parseInt(id));
                     MainActivity.addFurto(newFurto);
@@ -380,7 +380,7 @@ public  class ServerAPI {
         nameValuePairs.add(new BasicNameValuePair("categoria", f.mTipo));
         nameValuePairs.add(new BasicNameValuePair("titolo", f.mTitolo));
         nameValuePairs.add(new BasicNameValuePair("data", f.mDate));
-        nameValuePairs.add(new BasicNameValuePair("fascia", f.mOra));
+        nameValuePairs.add(new BasicNameValuePair("fascia", translateTimePhaseItalianEnglish(f.mOra)));
         nameValuePairs.add(new BasicNameValuePair("description", f.mDescrizione));
 
         String paramString = URLEncodedUtils.format(nameValuePairs, "utf-8");
@@ -503,5 +503,42 @@ public  class ServerAPI {
         return url;
     }
 
+    private String translateTimePhaseItalianEnglish(String fase){
+        String phase = "";
+        switch(fase){
+            case "mattina":
+                phase = "morning";
+                break;
+            case "pomeriggio":
+                phase = "afternoon";
+                break;
+            case "sera":
+                phase = "evening";
+                break;
+            case "notte":
+                phase = "night";
+                break;
+        }
+        return phase;
+    }
+
+    private String translateTimePhaseEnglishItalian(String phase){
+        String fase = "";
+        switch(phase){
+            case "morning":
+                fase = "mattina";
+                break;
+            case "afternoon":
+                fase = "pomeriggio";
+                break;
+            case "evening":
+                fase = "sera";
+                break;
+            case "night":
+                fase = "notte";
+                break;
+        }
+        return fase;
+    }
 
 }

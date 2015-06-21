@@ -58,7 +58,7 @@ public class MainActivity extends ActionBarActivity implements TouchableWrapper.
     public static Location location;
 
     ServerAPI api;
-    String deviceID;
+    static String deviceID;
 
 
     public static FragmentManager fragmentManager;
@@ -124,10 +124,8 @@ public class MainActivity extends ActionBarActivity implements TouchableWrapper.
         mMapManager.getMap().setInfoWindowAdapter(new GestioneInfoWindows(getLayoutInflater()));
         mMapManager.getMap().setOnInfoWindowClickListener(new GestioneInfoWindowsClick(this));
 
+        restartMap();
         mMapManager.setUpMap();
-
-
-
 
     }
 
@@ -176,6 +174,7 @@ public class MainActivity extends ActionBarActivity implements TouchableWrapper.
         super.onResume();
         mLocationListener.update();
         mMapManager.setUpMapIfNeeded();
+        restartMap2();
     }
 
     @Override
@@ -190,11 +189,8 @@ public class MainActivity extends ActionBarActivity implements TouchableWrapper.
             if (resultCode == Activity.RESULT_OK)
                newFurto();
 
-  //      if (resultCode==FAVORITI_STATE)
-//            newFavoirto();
 
-    //    setUpMapIfNeeded();
-
+        restartMap2();
     }
 
     /*
@@ -253,15 +249,16 @@ public class MainActivity extends ActionBarActivity implements TouchableWrapper.
             if(mFurto.mId==arrayFurti.get(i).mId && mFurto.mTitolo.matches(arrayFurti.get(i).mTitolo))
                 exist_this_furto=true;
 
-
+        if(mFurto.mId!=-1)
+            staticapi.getCommenti(mFurto.mId);
 
         if(!exist_this_furto) {
             arrayFurti.add(mFurto);
-            MainActivity.miesegnalazioni.add(mFurto);
         }
+        if (mFurto.mDeviceId.matches(deviceID))
+            miesegnalazioni.add(mFurto);
 
-        if(mFurto.mId!=-1)
-            staticapi.getCommenti(mFurto.mId);
+
     }
 
     public static  List<Preferiti> getArrayPreferiti ()
@@ -310,10 +307,10 @@ public class MainActivity extends ActionBarActivity implements TouchableWrapper.
     * */
     public   void restartMap ()
     {
-        for(int i = 0; i < arrayFurti.size(); i++)
-            if (arrayFurti.get(i).mIdMarker==null)
-            //MainActivity.addMakerFurtoMap(arrayFurti.get(i));
-                mMapManager.addMakerFurtoMap(arrayFurti.get(i));
+        if(arrayFurti != null)
+            for(int i = 0; i < arrayFurti.size(); i++)
+                if (arrayFurti.get(i).mIdMarker==null)
+                    mMapManager.addMakerFurtoMap(arrayFurti.get(i));
     }
 
 
@@ -324,9 +321,11 @@ public class MainActivity extends ActionBarActivity implements TouchableWrapper.
     * */
     public static  void restartMap2 ()
     {
-        for(int i = 0; i < arrayFurti.size(); i++)
-              //MainActivity.addMakerFurtoMap(arrayFurti.get(i));
-                mMapManager.addMakerFurtoMap(arrayFurti.get(i));
+        mMapManager.getMap().clear();
+        if(arrayFurti != null)
+            for(int i = 0; i < arrayFurti.size(); i++)
+                  //MainActivity.addMakerFurtoMap(arrayFurti.get(i));
+                    mMapManager.addMakerFurtoMap(arrayFurti.get(i));
 
         mLocationListener.update();
         mMapManager.setUpMap();
