@@ -52,6 +52,7 @@ public class GestisciBarraSinistra implements AdapterView.OnItemClickListener {
                 }
                 break;
             case 3: //Notifiche
+                MainActivity.mNotifiche.generateNotifiche(MainActivity.arrayFurti.get(2),"Casa");
                 break;
             case 4: //Mie segnalazioni
                 MainActivity.mMapManager.getMap().clear();

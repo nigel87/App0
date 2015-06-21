@@ -282,22 +282,13 @@ public  class ServerAPI {
                     //Furto(int newId, String newTitolo, String newTipo, String newIndirizzo, String newDate, String newOra, String newDescizione, String newDeviceId)
                     Furto newFurto = new Furto(Integer.parseInt(id), titolo, tipo, Furto.coordinateAIndirizzo(Double.parseDouble(slat), Double.parseDouble(slon)),date,translateTimePhaseEnglishItalian(ora),descrizione, device);
 
-                    //     getCommenti(Integer.parseInt(id));
-                    MainActivity.addFurto(newFurto);
+                    if(!newFurto.mOra.matches(""))
+                        MainActivity.addFurto(newFurto);
+
+                    /*if (newFurto.getDeviceId().equals(deviceid))
+                        MainActivity.miesegnalazioni.add(newFurto);*/
+
                 }
-
-
-
-                for (int i=0;i<MainActivity.arrayFurti.size();i++)
-                {
-
-                    if (MainActivity.arrayFurti.get(i).getDeviceId().equals(deviceid))
-                    {
-                        MainActivity.miesegnalazioni.add(MainActivity.arrayFurti.get(i));
-
-                    }
-                }
-
                 break;
 
             case POLICE:

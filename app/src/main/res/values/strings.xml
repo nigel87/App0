@@ -35,6 +35,7 @@
     <string name="logo_sapienzza">Logo universita la Sapienza</string>
     <string name="bottone_accetta">Accetta</string>
     <string name="bottone_cancella">Cancella</string>
+    <string name="caricando_dati">Caricando i dati di tutti furti nella zona.\nÈ possibile esplorare la mappa.</string>
 
 
 </resources>

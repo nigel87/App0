@@ -26,6 +26,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import android.support.v7.widget.Toolbar;
+import android.widget.Toast;
 
 
 public class MainActivity extends ActionBarActivity implements TouchableWrapper.UpdateMapAfterUserInterection {
@@ -49,6 +50,8 @@ public class MainActivity extends ActionBarActivity implements TouchableWrapper.
     private ListView leftDrawerList;
     private ArrayAdapter<String> navigationDrawerAdapter;
     private String[] barasinistra;
+
+    public static GestioneNotifiche mNotifiche;
 
     public static List <Furto> miesegnalazioni;
 
@@ -102,16 +105,14 @@ public class MainActivity extends ActionBarActivity implements TouchableWrapper.
 
         }
         initDrawer();
-        final GestioneNotifiche mNotifiche = new GestioneNotifiche();
+        mNotifiche = new GestioneNotifiche();
         //api.furti(mLocationListener.mLoc.getLatitude(), mLocationListener.mLoc.getLongitude());
-        api.fav();
-        api.police(mLocationListener.mLoc.getLatitude(), mLocationListener.mLoc.getLongitude());
-
-        for(int i = 0; i<4; i++){
+        for(int i = 0; i<2; i++){
             int START = 10*i;
             api.furti(mLocationListener.mLoc.getLatitude(), mLocationListener.mLoc.getLongitude(),START);
             start = START;
         }
+
         /*
         *
         * Gestisce il click ai bottoni della barra sinistra
@@ -124,8 +125,15 @@ public class MainActivity extends ActionBarActivity implements TouchableWrapper.
         mMapManager.getMap().setInfoWindowAdapter(new GestioneInfoWindows(getLayoutInflater()));
         mMapManager.getMap().setOnInfoWindowClickListener(new GestioneInfoWindowsClick(this));
 
-        restartMap();
+        //restartMap();
         mMapManager.setUpMap();
+
+        api.fav();
+        api.police(mLocationListener.mLoc.getLatitude(), mLocationListener.mLoc.getLongitude());
+
+
+        Toast.makeText(this, R.string.caricando_dati, Toast.LENGTH_LONG).show();
+        restartMap2();
 
     }
 
@@ -169,12 +177,23 @@ public class MainActivity extends ActionBarActivity implements TouchableWrapper.
     public static Polizia getPolizia(){    return polizia; }
 
     @Override
+    protected void onStart() {
+        super.onStart();
+        start = start+10;
+        api.furti(mLocationListener.mLoc.getLatitude(), mLocationListener.mLoc.getLongitude(),start);
+        restartMap();
+
+    }
+
+    @Override
     protected void onResume()
     {
         super.onResume();
+        start = start+10;
+        api.furti(mLocationListener.mLoc.getLatitude(), mLocationListener.mLoc.getLongitude(),start);
         mLocationListener.update();
         mMapManager.setUpMapIfNeeded();
-        restartMap2();
+        restartMap();
     }
 
     @Override
@@ -188,9 +207,8 @@ public class MainActivity extends ActionBarActivity implements TouchableWrapper.
         if (requestCode == REQUEST_STATE)
             if (resultCode == Activity.RESULT_OK)
                newFurto();
-
-
-        restartMap2();
+            if(resultCode != FAVORITI_STATE)
+                restartMap2();
     }
 
     /*
@@ -249,16 +267,15 @@ public class MainActivity extends ActionBarActivity implements TouchableWrapper.
             if(mFurto.mId==arrayFurti.get(i).mId && mFurto.mTitolo.matches(arrayFurti.get(i).mTitolo))
                 exist_this_furto=true;
 
-        if(mFurto.mId!=-1)
-            staticapi.getCommenti(mFurto.mId);
-
         if(!exist_this_furto) {
+            if(mFurto.mId!=-1)
+                staticapi.getCommenti(mFurto.mId);
+
             arrayFurti.add(mFurto);
+
+            if (mFurto.mDeviceId.matches(deviceID))
+                miesegnalazioni.add(mFurto);
         }
-        if (mFurto.mDeviceId.matches(deviceID))
-            miesegnalazioni.add(mFurto);
-
-
     }
 
     public static  List<Preferiti> getArrayPreferiti ()
@@ -368,6 +385,11 @@ public class MainActivity extends ActionBarActivity implements TouchableWrapper.
         if (location.distanceTo(new_location)>DIST_MIN_RECALL_API ) {
             location=new_location;
             api.furti(latLng.latitude, latLng.longitude);
+            restartMap();
+        }
+        else{
+            start =start + 10;
+            api.furti(latLng.latitude, latLng.longitude, start);
             restartMap();
         }
     }
