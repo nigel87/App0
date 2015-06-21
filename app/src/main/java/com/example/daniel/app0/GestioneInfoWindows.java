@@ -32,10 +32,9 @@ public class GestioneInfoWindows implements GoogleMap.InfoWindowAdapter {
 
     public View getInfoContents(Marker marker) {
 
-        //LayoutInflater inflater = (LayoutInflater) MainActivity.getAppContext().getSystemService(MainActivity.getAppContext().LAYOUT_INFLATER_SERVICE);
-
         switch (marker.getTitle()) {
             case "My Position":
+
                 // Getting view from the layout file info_window_layout
                 View p = lInflater.inflate(R.layout.info_marker_furto, null);
 
@@ -49,8 +48,6 @@ public class GestioneInfoWindows implements GoogleMap.InfoWindowAdapter {
                 TextView tvPosLon = (TextView) p.findViewById(R.id.tv_ora);
 
                 tvPosName.setText("My Location");
-                tvPosLat.setText("Lat:" + MainActivity.mLocationListener.mLoc.getLatitude());
-                tvPosLon.setText("Lon: " + MainActivity.mLocationListener.mLoc.getLongitude());
                 return p;
 
             case "Favoriti":
@@ -66,8 +63,8 @@ public class GestioneInfoWindows implements GoogleMap.InfoWindowAdapter {
                 Preferiti newFav = MainActivity.getArrayPreferiti().get(0);     //TODO: Provisional
 
                 // Setting the Name, Date & Ora
-                tvFavName.setText(newFav.getNome());
-                tvFavIndirizzo.setText(newFav.getIndirizzo());
+                //tvFavName.setText(newFav.getNome());
+                //tvFavIndirizzo.setText(newFav.getIndirizzo());
                 return f;
 
             case "Carabinieri":

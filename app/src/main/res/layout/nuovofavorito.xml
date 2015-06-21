@@ -78,8 +78,6 @@
                 android:layout_height="30dp"
                 android:drawable="@drawable/ic_action_location_found"
                 android:layout_marginRight="5dp"
-                android:scaleX=".5"
-                android:scaleY=".5"
                 android:src="@drawable/ic_action_location_found"
                 android:onClick="openMap"
                 android:id="@+id/imageButton"

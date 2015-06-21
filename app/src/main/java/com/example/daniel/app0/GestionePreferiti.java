@@ -38,14 +38,15 @@ public class GestionePreferiti extends ActionBarActivity {
         if (resultCode == Activity.RESULT_OK)
         {
             Preferiti favoriti= MainActivity.getArrayPreferiti().get(MainActivity.getArrayPreferiti().size()-1);
-            setContentView(R.layout.preferiti_lista);
+            li.add(favoriti.getNome());
+            aggiungiListaFavorti();
+            /*setContentView(R.layout.preferiti_lista);
             setupToolbar();
             ListView listafavoriti = (ListView) findViewById(R.id.favlist);
-            li.add(favoriti.getNome());
-            ArrayAdapter adapter = new ArrayAdapter<>(getAppContext(), android.R.layout.list_content, R.id.txtTitle, li);
+            //ArrayAdapter adapter = new ArrayAdapter<>(getAppContext(), android.R.layout.list_content, R.id.txtTitle, li);
 
-            listafavoriti.setAdapter(adapter);
-            listafavoriti.setOnItemClickListener(new Gestisci());
+            //listafavoriti.setAdapter(adapter);
+            listafavoriti.setOnItemClickListener(new Gestisci());*/
         }
 
         if (resultCode == ELIMINA_PREFERITO)
@@ -159,14 +160,12 @@ public class GestionePreferiti extends ActionBarActivity {
 
         GestionePreferiti.context = getApplicationContext();
 
-
-
-
         ListView listafavoriti = (ListView) findViewById(R.id.favlist);
         setupToolbar();
 
         if (arrayFavoriti !=null && arrayFavoriti.size()>0)
         {
+            li.clear();
             for (int i = 0; i < arrayFavoriti.size(); i++)
             {
                 final Preferiti favoriti = arrayFavoriti.get(i);
