@@ -381,16 +381,16 @@ public class MainActivity extends ActionBarActivity implements TouchableWrapper.
         new_location.setLatitude(latLng.latitude);
         new_location.setLongitude(latLng.longitude);
 
-
-        if (location.distanceTo(new_location)>DIST_MIN_RECALL_API ) {
-            location=new_location;
-            api.furti(latLng.latitude, latLng.longitude);
-            restartMap();
-        }
-        else{
-            start =start + 10;
-            api.furti(latLng.latitude, latLng.longitude, start);
-            restartMap();
+        if(arrayFurti.size() < 60) {
+            if (location.distanceTo(new_location) > DIST_MIN_RECALL_API) {
+                location = new_location;
+                api.furti(latLng.latitude, latLng.longitude);
+                restartMap();
+            } else {
+                start = start + 10;
+                api.furti(latLng.latitude, latLng.longitude, start);
+                restartMap();
+            }
         }
     }
 }
