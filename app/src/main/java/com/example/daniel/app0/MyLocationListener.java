@@ -23,26 +23,38 @@ public class MyLocationListener implements LocationListener {
     public static String mProvider;
 
     public Location mLoc;
-    
+
+    boolean isGPSEnabled;
+
+
     public MyLocationListener(){
+
 
         mLocationManager = (LocationManager)MainActivity.getAppContext().getSystemService(Context.LOCATION_SERVICE);
         setProvider();
+
+        isGPSEnabled = mLocationManager.isProviderEnabled(LocationManager.GPS_PROVIDER);
+
 
         if(mLocationManager == null){
             Intent intent = new Intent( android.provider.Settings.ACTION_LOCATION_SOURCE_SETTINGS);
             MainActivity.getAppContext().startActivity(intent);
         }
-        if(mLocationManager != null) {
-           // mLocationManager.requestLocationUpdates(mProvider, TIEMPO_MIN, DISTANCIA_MIN, this);
+        if(isGPSEnabled) {
+            // mLocationManager.requestLocationUpdates(mProvider, TIEMPO_MIN, DISTANCIA_MIN, this);
             mLoc = getLastKnownLocation();
         }
-        
-    };
+        else{
+            mLoc = new Location(mProvider);
+            mLoc.setLongitude(12.497170);
+            mLoc.setLatitude(41.914216);
+        }
+    }
 
     public void update(){
         mLocationManager.requestLocationUpdates(mProvider, TIEMPO_MIN, DISTANCIA_MIN, this);
-        mLoc = getLastKnownLocation();
+        if(isGPSEnabled)
+            mLoc = getLastKnownLocation();
 
     }
 

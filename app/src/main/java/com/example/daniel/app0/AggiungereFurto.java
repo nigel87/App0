@@ -62,22 +62,7 @@ public class AggiungereFurto extends ActionBarActivity {
         fillSpinner(R.id.spinner_ora_nuovo_furto, R.array.ora_furto_array);
     }
 
-    /* @Override
-     public boolean onOptionsItemSelected(MenuItem item) {
-         // Handle action bar item clicks here. The action bar will
-         // automatically handle clicks on the Home/Up button, so long
-         // as you specify a parent activity in AndroidManifest.xml.
-         int id = item.getItemId();
 
-         //noinspection SimplifiableIfStatement
-         if (id == R.id.action_settings) {
-             return true;
-         }
-
-         return super.onOptionsItemSelected(item);
-     }
-
-     */
     public void salvareFurto(View view){
 
         EditText et_Titolo = (EditText) findViewById(R.id.titolo_nuevo_furto);
@@ -101,16 +86,6 @@ public class AggiungereFurto extends ActionBarActivity {
 
 
             int id = -1;
-            //Furto(int newId, String newTitolo, String newTipo, String newIndirizzo, String newDate, String newOra, String newDescizione, String newDeviceId)
-            /*newFurto = new Furto(
-                    id,
-                    titolo.getText().toString(),
-                    tipo.getSelectedItem().toString(),
-                    newIndir.getText().toString(),
-                    dateFormat.format(mCalendar.getTime()),
-                    ora.getSelectedItem().toString(),
-                    newDescrizione.getText().toString(),
-                    MainActivity.staticapi.deviceid);*/
              newFurto = new Furto(
                     id,
                     titolo,

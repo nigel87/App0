@@ -50,7 +50,7 @@
         </activity>
         <activity
             android:name=".GestionePreferitiCancellaPreferito"
-            android:label="@string/title_activity_gestire_preferiti" >
+            android:label="@string/title_cancella_preferiti" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.example.daniel.app0.GestionePreferiti" />

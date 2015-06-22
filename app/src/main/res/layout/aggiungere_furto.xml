@@ -194,7 +194,7 @@
             android:textSize="10sp"
             android:scaleY=".8"
             android:onClick="salvareFurto"
-            android:background="@color/colorAccent"
+            android:background="@color/coloraccent"
             android:layout_alignParentTop="true" />
         <Button
             android:layout_width="130dp"
@@ -207,6 +207,6 @@
             android:layout_alignParentTop="true"
             android:layout_alignParentEnd="true"
             android:layout_alignParentRight="true"
-            android:background="@color/colorAccent" />
+            android:background="@color/coloraccent" />
     </RelativeLayout>
 </LinearLayout>

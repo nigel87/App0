@@ -82,8 +82,7 @@ public class MapCercarePosto extends ActionBarActivity implements GoogleMap.OnMa
 
         mButtonAccettare.setClickable(true);
         mMap.clear();
-        mMap.addMarker(new MarkerOptions()  .position(point)
-                .title("Furto"));
+        mMap.addMarker(new MarkerOptions()  .position(point));
         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(point, 16));
     }
 
